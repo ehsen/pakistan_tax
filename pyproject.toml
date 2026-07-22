@@ -8,7 +8,9 @@ requires-python = ">=3.14"
 readme = "README.md"
 dynamic = ["version"]
 dependencies = [
-    # "frappe~=16.0.0" # Installed and managed by bench.
+    # frappe and erpnext are installed and managed by bench.
+    # Minimum required version: ERPNext / Frappe v16.0.0 (see hooks.py
+    # required_apps and the before_install version check, and README.md).
 ]
 
 [build-system]

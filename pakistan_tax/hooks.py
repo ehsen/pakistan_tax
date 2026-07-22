@@ -8,7 +8,7 @@ app_license = "mit"
 # Apps
 # ------------------
 
-# required_apps = []
+required_apps = ["erpnext"]
 
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
@@ -85,7 +85,7 @@ doctype_js = {"Sales Invoice": "public/js/sales_invoice_fbr.js"}
 # Installation
 # ------------
 
-# before_install = "pakistan_tax.install.before_install"
+before_install = "pakistan_tax.setup.install.before_install"
 after_install = "pakistan_tax.setup.install.after_install"
 after_migrate = "pakistan_tax.setup.install.after_migrate"
 

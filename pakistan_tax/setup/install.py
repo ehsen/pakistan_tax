@@ -5,8 +5,10 @@ All custom fields this app needs live here (created via after_install /
 after_migrate) so nothing exists only in a site database.
 """
 
+import frappe
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
+MIN_ERPNEXT_VERSION = (16, 0, 0)
 MODULE = "Pakistan Tax Compliance"
 
 TAX_CATEGORY_OPTIONS = "\nSales Tax\nSales Tax Fixed\nFurther Sales Tax\nAdvance Tax 236G\nWHT"
@@ -308,6 +310,44 @@ CUSTOM_FIELDS["Payment Entry Reference"] = [
 for _df_list in CUSTOM_FIELDS.values():
 	for _df in _df_list:
 		_df.setdefault("module", MODULE)
+
+
+def _erpnext_version_tuple():
+	version_str = frappe.get_attr("erpnext.__version__")
+	parts = []
+	for chunk in version_str.split("."):
+		digits = "".join(c for c in chunk if c.isdigit())
+		parts.append(int(digits) if digits else 0)
+	while len(parts) < 3:
+		parts.append(0)
+	return tuple(parts[:3])
+
+
+def before_install():
+	"""required_apps only guarantees erpnext is installed, not which version.
+	Pakistan Tax Compliance depends on ERPNext v16 behavior (native dated
+	Item Tax selection, Item Wise Tax Detail child table, regional GL hooks) —
+	fail fast with a clear message on older versions instead of installing
+	into a site where the tax engine silently behaves differently."""
+	try:
+		installed = _erpnext_version_tuple()
+	except Exception:
+		frappe.throw(
+			"Pakistan Tax Compliance requires the erpnext app to be installed "
+			"first, and could not determine its version."
+		)
+		return
+
+	if installed < MIN_ERPNEXT_VERSION:
+		frappe.throw(
+			"Pakistan Tax Compliance requires ERPNext v{0}.0.0 or later "
+			"(found v{1}.{2}.{3}). This app relies on ERPNext v16 tax-engine "
+			"behavior (dated Item Tax template selection, the Item Wise Tax "
+			"Detail child table, and regional GL hooks) that does not exist "
+			"in earlier versions.".format(
+				MIN_ERPNEXT_VERSION[0], *installed
+			)
+		)
 
 
 def after_install():
