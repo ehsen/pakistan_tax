@@ -17,6 +17,11 @@
   "business_activity",
   "column_break_b",
   "sector",
+  "section_seller",
+  "seller_business_name",
+  "seller_province",
+  "column_break_seller",
+  "seller_address",
   "section_accounts",
   "account_sales_tax",
   "account_sales_tax_fixed",
@@ -93,6 +98,32 @@
    "fieldtype": "Select",
    "label": "Sector",
    "options": "\nAll Other Sectors\nSteel\nFMCG\nTextile\nTelecom\nPetroleum\nElectricity Distribution\nGas Distribution\nServices\nAutomobile\nCNG Stations\nPharmaceuticals\nWholesale / Retails"
+  },
+  {
+   "fieldname": "section_seller",
+   "fieldtype": "Section Break",
+   "label": "Seller Profile (FBR payload)"
+  },
+  {
+   "description": "Defaults to company name when empty",
+   "fieldname": "seller_business_name",
+   "fieldtype": "Data",
+   "label": "Seller Business Name"
+  },
+  {
+   "fieldname": "seller_province",
+   "fieldtype": "Link",
+   "label": "Seller Province",
+   "options": "FBR Province"
+  },
+  {
+   "fieldname": "column_break_seller",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "seller_address",
+   "fieldtype": "Small Text",
+   "label": "Seller Address"
   },
   {
    "fieldname": "section_accounts",

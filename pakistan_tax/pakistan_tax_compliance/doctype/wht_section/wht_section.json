@@ -1,0 +1,113 @@
+{
+ "actions": [],
+ "autoname": "field:section_code",
+ "creation": "2026-07-22 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_code",
+  "section_description",
+  "tax_payment_nature",
+  "effective_from",
+  "column_break_a",
+  "filer_rate",
+  "non_filer_rate",
+  "section_accounts",
+  "payable_account",
+  "column_break_b",
+  "receivable_account"
+ ],
+ "fields": [
+  {
+   "description": "e.g. 153(1)(a)",
+   "fieldname": "section_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Section Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "section_description",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Section Description"
+  },
+  {
+   "fieldname": "tax_payment_nature",
+   "fieldtype": "Data",
+   "label": "Tax Payment Nature"
+  },
+  {
+   "fieldname": "effective_from",
+   "fieldtype": "Date",
+   "label": "Effective From"
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "filer_rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Filer Rate (%)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "non_filer_rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Non-Filer Rate (%)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_accounts",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "Credited when WE withhold from supplier payments (liability)",
+   "fieldname": "payable_account",
+   "fieldtype": "Link",
+   "label": "Payable Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_b",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Debited when CUSTOMERS withhold from our receipts (asset)",
+   "fieldname": "receivable_account",
+   "fieldtype": "Link",
+   "label": "Receivable Account",
+   "options": "Account"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-22 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "WHT Section",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,179 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-07-22 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "posting_date",
+  "company",
+  "tax_type",
+  "status",
+  "column_break_a",
+  "party_type",
+  "party",
+  "tax_party",
+  "party_ntn",
+  "section",
+  "section_amounts",
+  "taxable_amount",
+  "tax_amount",
+  "fbr_invoice_no",
+  "column_break_b",
+  "voucher_type",
+  "voucher_no",
+  "cpr_reference",
+  "match_reference",
+  "is_reversal",
+  "reversal_of"
+ ],
+ "fields": [
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Posting Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tax_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tax Type",
+   "options": "Output ST\nOutput ST Fixed\nFurther Tax\nInput ST\nInput ST Fixed\nWHT Payable\nWHT Receivable\nAdvance Tax 236G",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "\nPending Return\nSettled\nClaimed\nMatched\nMissing\nMismatch\nWithheld\nDeposited\nAwaiting CPR\nCertified\nReversed"
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "party_type",
+   "fieldtype": "Select",
+   "label": "Party Type",
+   "options": "\nCustomer\nSupplier"
+  },
+  {
+   "fieldname": "party",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Party",
+   "options": "party_type"
+  },
+  {
+   "description": "Third-party tax identity when the tax document names someone else",
+   "fieldname": "tax_party",
+   "fieldtype": "Link",
+   "label": "Tax Party",
+   "options": "Tax Party"
+  },
+  {
+   "fieldname": "party_ntn",
+   "fieldtype": "Data",
+   "label": "Party Ntn"
+  },
+  {
+   "fieldname": "section",
+   "fieldtype": "Link",
+   "label": "Section",
+   "options": "WHT Section"
+  },
+  {
+   "fieldname": "section_amounts",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "taxable_amount",
+   "fieldtype": "Currency",
+   "label": "Taxable Amount"
+  },
+  {
+   "fieldname": "tax_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Tax Amount"
+  },
+  {
+   "fieldname": "fbr_invoice_no",
+   "fieldtype": "Data",
+   "label": "FBR Invoice No"
+  },
+  {
+   "fieldname": "column_break_b",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "voucher_type",
+   "fieldtype": "Data",
+   "label": "Voucher Type"
+  },
+  {
+   "fieldname": "voucher_no",
+   "fieldtype": "Dynamic Link",
+   "label": "Voucher No",
+   "options": "voucher_type"
+  },
+  {
+   "fieldname": "cpr_reference",
+   "fieldtype": "Data",
+   "label": "CPR Reference"
+  },
+  {
+   "fieldname": "match_reference",
+   "fieldtype": "Data",
+   "label": "Match Reference"
+  },
+  {
+   "fieldname": "is_reversal",
+   "fieldtype": "Check",
+   "label": "Is Reversal"
+  },
+  {
+   "fieldname": "reversal_of",
+   "fieldtype": "Link",
+   "label": "Reversal Of",
+   "options": "Tax Ledger Entry"
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-22 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "Tax Ledger Entry",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

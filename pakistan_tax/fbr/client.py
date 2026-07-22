@@ -7,10 +7,26 @@ return a valid JSON body with HTTP 500.
 """
 
 import json
+import re
 
 import frappe
 import requests
 from frappe import _
+
+
+def parse_lenient_json(text):
+	"""FBR responses are sometimes malformed JSON (trailing commas, tabs).
+	Try strict parsing first, then strip trailing commas and retry."""
+	if not text:
+		return None
+	try:
+		return json.loads(text)
+	except ValueError:
+		try:
+			cleaned = re.sub(r",\s*([}\]])", r"\1", text)
+			return json.loads(cleaned)
+		except ValueError:
+			return None
 
 PDI_V1 = "https://gw.fbr.gov.pk/pdi/v1"
 PDI_V2 = "https://gw.fbr.gov.pk/pdi/v2"
@@ -83,10 +99,7 @@ class FBRClient:
 				resp = requests.post(url, json=payload, headers=self._headers(json_body=True),
 					timeout=REQUEST_TIMEOUT)
 			status_code, text = resp.status_code, resp.text
-			try:
-				data = resp.json()
-			except ValueError:
-				data = None
+			data = parse_lenient_json(text)
 		except requests.RequestException as e:
 			error = str(e)
 

@@ -71,6 +71,20 @@ def sync_transaction_types(client=None):
 	return {"inserted": count, "total": len(resp.data)}
 
 
+def seed_scenarios():
+	"""Stamp sandbox scenario IDs (doc §9) onto transaction types."""
+	from pakistan_tax.transactions.payload import SCENARIO_MAP
+	updated = 0
+	for desc, scenario in SCENARIO_MAP.items():
+		name = frappe.db.get_value("FBR Transaction Type",
+			{"transaction_description": desc})
+		if name and not frappe.db.get_value("FBR Transaction Type", name, "scenario_id"):
+			frappe.db.set_value("FBR Transaction Type", name, "scenario_id",
+				scenario, update_modified=False)
+			updated += 1
+	return updated
+
+
 # ------------------------------------------------------------------- UOMs
 
 def sync_uoms(client=None):

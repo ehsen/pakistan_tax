@@ -43,7 +43,7 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {"Sales Invoice": "public/js/sales_invoice_fbr.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -135,10 +135,29 @@ after_migrate = "pakistan_tax.setup.install.after_migrate"
 
 doc_events = {
 	"Sales Invoice": {
+		"before_validate": "pakistan_tax.transactions.resolution.resolve_templates",
 		"validate": "pakistan_tax.transactions.line_taxes.update_line_tax_fields",
+		"before_submit": [
+			"pakistan_tax.transactions.submit.validate_and_snapshot",
+			"pakistan_tax.pra.controller.before_submit",
+		],
+		"on_submit": "pakistan_tax.tax_ledger.posting.on_invoice_submit",
+		"on_cancel": "pakistan_tax.tax_ledger.posting.on_voucher_cancel",
 	},
 	"Purchase Invoice": {
+		"before_validate": "pakistan_tax.transactions.resolution.resolve_templates",
 		"validate": "pakistan_tax.transactions.line_taxes.update_line_tax_fields",
+		"before_submit": "pakistan_tax.transactions.submit.validate_and_snapshot",
+		"on_submit": "pakistan_tax.tax_ledger.posting.on_invoice_submit",
+		"on_cancel": "pakistan_tax.tax_ledger.posting.on_voucher_cancel",
+	},
+	"Payment Entry": {
+		"before_validate": "pakistan_tax.wht.payment_entry.calculate_wht",
+		"on_submit": "pakistan_tax.tax_ledger.posting.on_payment_submit",
+		"on_cancel": "pakistan_tax.tax_ledger.posting.on_voucher_cancel",
+	},
+	"Item": {
+		"validate": "pakistan_tax.transactions.third_schedule.sync_third_schedule_template",
 	},
 }
 
