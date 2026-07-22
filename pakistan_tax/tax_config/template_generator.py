@@ -26,15 +26,31 @@ def _template_title(tt_id, rate_id, rate_desc):
 	return title[:120]
 
 
-def generate_item_tax_templates(company, sales=True):
+def _rate_rows(rate, settings):
+	"""Template rows for a rate — BOTH output and input accounts, so one
+	template serves sales and purchase documents (the engine only matches
+	accounts that appear in the document's header rows)."""
+	rows = []
+	if rate.rate_type in ("Percentage", "Compound", "Zero", "Exempt"):
+		for account in (settings.account_sales_tax, settings.account_input_sales_tax):
+			rows.append({"tax_type": account,
+				"tax_rate": rate.percent_component or 0,
+				"pk_tax_category": "Sales Tax"})
+	if rate.rate_type in ("Fixed", "Compound"):
+		for account in (settings.account_sales_tax_fixed,
+				settings.account_input_sales_tax_fixed):
+			rows.append({"tax_type": account,
+				"tax_rate": rate.fixed_component or 0,
+				"pk_tax_category": "Sales Tax Fixed"})
+	return rows
+
+
+def generate_item_tax_templates(company):
 	"""Create missing Item Tax Templates for every unique (transaction type,
 	rate) among open associations in the company's scoped provinces.
 
 	Existing generated templates are never modified (immutability)."""
 	settings = ensure_tax_accounts(company)
-	st_account = settings.account_sales_tax if sales else settings.account_input_sales_tax
-	st_fixed_account = (settings.account_sales_tax_fixed if sales
-		else settings.account_input_sales_tax_fixed)
 
 	province_scope = [p.province for p in (settings.provinces or [])] or None
 	filters = {"valid_upto": ("is", "not set")}
@@ -59,19 +75,7 @@ def generate_item_tax_templates(company, sales=True):
 			skipped += 1
 			continue
 
-		taxes = []
-		if rate.rate_type in ("Percentage", "Compound", "Zero", "Exempt"):
-			taxes.append({
-				"tax_type": st_account,
-				"tax_rate": rate.percent_component or 0,
-				"pk_tax_category": "Sales Tax",
-			})
-		if rate.rate_type in ("Fixed", "Compound"):
-			taxes.append({
-				"tax_type": st_fixed_account,
-				"tax_rate": rate.fixed_component or 0,
-				"pk_tax_category": "Sales Tax Fixed",
-			})
+		taxes = _rate_rows(rate, settings)
 		if not taxes:
 			continue
 
@@ -214,6 +218,26 @@ def ensure_tax_categories_and_rules(company):
 		}).insert(ignore_permissions=True)
 		created.append(f"Tax Rule: Sales/{category}")
 	return {"created": created}
+
+
+def repair_generated_templates(company):
+	"""Dev-phase schema fix: ensure every generated template carries both
+	output and input account rows (older generations were output-only)."""
+	settings = ensure_tax_accounts(company)
+	fixed = 0
+	for name in frappe.get_all("Item Tax Template",
+			filters={"company": company, "pk_is_fbr_generated": 1}, pluck="name"):
+		doc = frappe.get_doc("Item Tax Template", name)
+		rate = frappe.get_doc("FBR Rate", doc.pk_fbr_rate)
+		have = {row.tax_type for row in doc.taxes}
+		missing = [r for r in _rate_rows(rate, settings) if r["tax_type"] not in have]
+		if missing:
+			for row in missing:
+				doc.append("taxes", row)
+			doc.flags.ignore_permissions = True
+			doc.save()
+			fixed += 1
+	return {"repaired": fixed}
 
 
 @frappe.whitelist()

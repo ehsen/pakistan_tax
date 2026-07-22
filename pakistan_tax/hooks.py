@@ -133,13 +133,14 @@ after_migrate = "pakistan_tax.setup.install.after_migrate"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Sales Invoice": {
+		"validate": "pakistan_tax.transactions.line_taxes.update_line_tax_fields",
+	},
+	"Purchase Invoice": {
+		"validate": "pakistan_tax.transactions.line_taxes.update_line_tax_fields",
+	},
+}
 
 # Scheduled Tasks
 # ---------------

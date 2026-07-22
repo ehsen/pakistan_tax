@@ -106,6 +106,43 @@ CUSTOM_FIELDS = {
 }
 
 
+def _line_tax_fields():
+	"""Per-row tax output fields (§3.1) — populated by the engine via
+	pakistan_tax.transactions.line_taxes, never entered by hand."""
+	fields = [
+		{"fieldname": "pk_tax_section", "fieldtype": "Section Break",
+			"label": "Pakistan Tax", "insert_after": "amount", "collapsible": 0},
+		{"fieldname": "pk_st_rate", "fieldtype": "Float", "label": "ST Rate (%)",
+			"insert_after": "pk_tax_section"},
+		{"fieldname": "pk_st_amount", "fieldtype": "Currency", "label": "ST Amount",
+			"options": "currency", "insert_after": "pk_st_rate", "in_list_view": 0,
+			"columns": 1},
+		{"fieldname": "pk_further_tax_rate", "fieldtype": "Float",
+			"label": "Further Tax Rate (%)", "insert_after": "pk_st_amount"},
+		{"fieldname": "pk_tax_col_break", "fieldtype": "Column Break",
+			"insert_after": "pk_further_tax_rate"},
+		{"fieldname": "pk_further_tax_amount", "fieldtype": "Currency",
+			"label": "Further Tax Amount", "options": "currency",
+			"insert_after": "pk_tax_col_break"},
+		{"fieldname": "pk_advance_tax_amount", "fieldtype": "Currency",
+			"label": "Advance Tax Amount", "options": "currency",
+			"insert_after": "pk_further_tax_amount"},
+		{"fieldname": "pk_total_incl_tax", "fieldtype": "Currency",
+			"label": "Total Incl. Tax", "options": "currency",
+			"insert_after": "pk_advance_tax_amount", "columns": 1},
+	]
+	for f in fields:
+		f["module"] = MODULE
+		if f["fieldtype"] not in ("Section Break", "Column Break"):
+			f["read_only"] = 1
+			f["no_copy"] = 1
+	return fields
+
+
+CUSTOM_FIELDS["Sales Invoice Item"] = _line_tax_fields()
+CUSTOM_FIELDS["Purchase Invoice Item"] = _line_tax_fields()
+
+
 def after_install():
 	create_custom_fields(CUSTOM_FIELDS, ignore_validate=True)
 
