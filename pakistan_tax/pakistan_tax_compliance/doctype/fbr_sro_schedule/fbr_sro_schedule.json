@@ -1,0 +1,97 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-07-22 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "fbr_rate",
+  "province",
+  "sro",
+  "column_break_a",
+  "valid_from",
+  "valid_upto",
+  "source",
+  "last_seen_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "fbr_rate",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Fbr Rate",
+   "options": "FBR Rate",
+   "reqd": 1
+  },
+  {
+   "fieldname": "province",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Province",
+   "options": "FBR Province",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sro",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sro",
+   "options": "FBR SRO",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "valid_from",
+   "fieldtype": "Date",
+   "label": "Valid From",
+   "reqd": 1
+  },
+  {
+   "fieldname": "valid_upto",
+   "fieldtype": "Date",
+   "label": "Valid Upto"
+  },
+  {
+   "default": "Synced",
+   "fieldname": "source",
+   "fieldtype": "Select",
+   "label": "Source",
+   "options": "Synced\nManual"
+  },
+  {
+   "fieldname": "last_seen_on",
+   "fieldtype": "Date",
+   "label": "Last Seen On",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-22 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "FBR SRO Schedule",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

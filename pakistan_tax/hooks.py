@@ -86,7 +86,8 @@ app_license = "mit"
 # ------------
 
 # before_install = "pakistan_tax.install.before_install"
-# after_install = "pakistan_tax.install.after_install"
+after_install = "pakistan_tax.setup.install.after_install"
+after_migrate = "pakistan_tax.setup.install.after_migrate"
 
 # Uninstallation
 # ------------
@@ -143,23 +144,11 @@ app_license = "mit"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"pakistan_tax.tasks.all"
-# 	],
-# 	"daily": [
-# 		"pakistan_tax.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"pakistan_tax.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"pakistan_tax.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"pakistan_tax.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+	"daily": [
+		"pakistan_tax.fbr.sync.daily_sync",
+	],
+}
 
 # Testing
 # -------

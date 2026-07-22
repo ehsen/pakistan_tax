@@ -1,0 +1,100 @@
+{
+ "actions": [],
+ "autoname": "format:FBR-RATE-{rate_id}",
+ "creation": "2026-07-22 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "rate_id",
+  "rate_desc",
+  "rate_type",
+  "column_break_a",
+  "percent_component",
+  "fixed_component",
+  "fixed_uom",
+  "needs_review",
+  "last_seen_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "rate_id",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Rate Id",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "rate_desc",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Rate Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rate_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Rate Type",
+   "options": "\nPercentage\nFixed\nCompound\nExempt\nZero"
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "percent_component",
+   "fieldtype": "Float",
+   "label": "Percent Component"
+  },
+  {
+   "fieldname": "fixed_component",
+   "fieldtype": "Currency",
+   "label": "Fixed Component"
+  },
+  {
+   "fieldname": "fixed_uom",
+   "fieldtype": "Link",
+   "label": "Fixed Component UOM",
+   "options": "UOM"
+  },
+  {
+   "description": "Set when the rate description could not be parsed confidently",
+   "fieldname": "needs_review",
+   "fieldtype": "Check",
+   "label": "Needs Review"
+  },
+  {
+   "fieldname": "last_seen_on",
+   "fieldtype": "Date",
+   "label": "Last Seen On",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-22 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "FBR Rate",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,126 @@
+{
+ "actions": [],
+ "autoname": "field:company",
+ "creation": "2026-07-22 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "is_enabled",
+  "column_break_a",
+  "environment",
+  "statl_revalidation_days",
+  "section_tokens",
+  "sandbox_token",
+  "production_token",
+  "section_profile",
+  "business_activity",
+  "column_break_b",
+  "sector",
+  "section_provinces",
+  "provinces"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "is_enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Sandbox",
+   "fieldname": "environment",
+   "fieldtype": "Select",
+   "label": "Environment",
+   "options": "Sandbox\nProduction"
+  },
+  {
+   "default": "7",
+   "description": "Re-verify party STATL status if last check is older than this many days",
+   "fieldname": "statl_revalidation_days",
+   "fieldtype": "Int",
+   "label": "Statl Revalidation Days"
+  },
+  {
+   "fieldname": "section_tokens",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "sandbox_token",
+   "fieldtype": "Password",
+   "label": "Sandbox Token"
+  },
+  {
+   "fieldname": "production_token",
+   "fieldtype": "Password",
+   "label": "Production Token"
+  },
+  {
+   "fieldname": "section_profile",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "business_activity",
+   "fieldtype": "Select",
+   "label": "Business Activity",
+   "options": "\nManufacturer\nImporter\nDistributor\nWholesaler\nExporter\nRetailer\nService Provider\nOther"
+  },
+  {
+   "fieldname": "column_break_b",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sector",
+   "fieldtype": "Select",
+   "label": "Sector",
+   "options": "\nAll Other Sectors\nSteel\nFMCG\nTextile\nTelecom\nPetroleum\nElectricity Distribution\nGas Distribution\nServices\nAutomobile\nCNG Stations\nPharmaceuticals\nWholesale / Retails"
+  },
+  {
+   "fieldname": "section_provinces",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "provinces",
+   "fieldtype": "Table",
+   "label": "Provinces",
+   "options": "FBR Settings Province"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-22 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "FBR Settings",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

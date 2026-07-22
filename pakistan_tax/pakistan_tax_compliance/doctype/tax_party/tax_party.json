@@ -1,0 +1,103 @@
+{
+ "actions": [],
+ "autoname": "field:party_name",
+ "creation": "2026-07-22 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "party_name",
+  "ntn_cnic",
+  "strn",
+  "column_break_a",
+  "province",
+  "address",
+  "section_status",
+  "sales_tax_registration_type",
+  "sales_tax_atl_status",
+  "statl_last_verified"
+ ],
+ "fields": [
+  {
+   "fieldname": "party_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Party Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "ntn_cnic",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "NTN / CNIC"
+  },
+  {
+   "fieldname": "strn",
+   "fieldtype": "Data",
+   "label": "STRN"
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "province",
+   "fieldtype": "Link",
+   "label": "Province",
+   "options": "FBR Province"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "section_status",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "sales_tax_registration_type",
+   "fieldtype": "Select",
+   "label": "Sales Tax Registration Type",
+   "options": "\nRegistered\nUnregistered"
+  },
+  {
+   "fieldname": "sales_tax_atl_status",
+   "fieldtype": "Select",
+   "label": "Sales Tax ATL Status",
+   "options": "\nActive\nIn-Active"
+  },
+  {
+   "fieldname": "statl_last_verified",
+   "fieldtype": "Datetime",
+   "label": "STATL Last Verified",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-22 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "Tax Party",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

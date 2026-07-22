@@ -1,0 +1,96 @@
+{
+ "actions": [],
+ "autoname": "field:transaction_description",
+ "creation": "2026-07-22 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "transaction_type_id",
+  "transaction_description",
+  "scenario_id",
+  "column_break_a",
+  "is_service",
+  "ignore_pricing",
+  "ignore_hscode",
+  "section_templates",
+  "default_templates"
+ ],
+ "fields": [
+  {
+   "fieldname": "transaction_type_id",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Transaction Type Id",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "transaction_description",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Transaction Description",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "scenario_id",
+   "fieldtype": "Data",
+   "label": "Sandbox Scenario ID"
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "is_service",
+   "fieldtype": "Check",
+   "label": "Is Service"
+  },
+  {
+   "fieldname": "ignore_pricing",
+   "fieldtype": "Check",
+   "label": "Ignore Pricing"
+  },
+  {
+   "fieldname": "ignore_hscode",
+   "fieldtype": "Check",
+   "label": "Ignore HS Code"
+  },
+  {
+   "fieldname": "section_templates",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "default_templates",
+   "fieldtype": "Table",
+   "label": "Default Templates",
+   "options": "FBR Transaction Type Template"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-22 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "FBR Transaction Type",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

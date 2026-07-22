@@ -1,0 +1,109 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-07-22 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "endpoint",
+  "method",
+  "reference_doctype",
+  "reference_name",
+  "column_break_a",
+  "status_code",
+  "success",
+  "error_summary",
+  "section_payloads",
+  "request_payload",
+  "response_payload"
+ ],
+ "fields": [
+  {
+   "fieldname": "endpoint",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Endpoint",
+   "reqd": 1
+  },
+  {
+   "default": "GET",
+   "fieldname": "method",
+   "fieldtype": "Data",
+   "label": "Method"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Data",
+   "label": "Reference Doctype"
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Data",
+   "label": "Reference Name"
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status_code",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Status Code"
+  },
+  {
+   "fieldname": "success",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Success"
+  },
+  {
+   "fieldname": "error_summary",
+   "fieldtype": "Small Text",
+   "label": "Error Summary"
+  },
+  {
+   "fieldname": "section_payloads",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "request_payload",
+   "fieldtype": "Code",
+   "label": "Request Payload",
+   "options": "JSON"
+  },
+  {
+   "fieldname": "response_payload",
+   "fieldtype": "Code",
+   "label": "Response Payload",
+   "options": "JSON"
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-22 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "FBR Api Log",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
