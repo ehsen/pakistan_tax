@@ -17,6 +17,14 @@
   "business_activity",
   "column_break_b",
   "sector",
+  "section_accounts",
+  "account_sales_tax",
+  "account_sales_tax_fixed",
+  "account_further_tax",
+  "column_break_acc",
+  "account_advance_tax_236g",
+  "account_input_sales_tax",
+  "account_input_sales_tax_fixed",
   "section_provinces",
   "provinces"
  ],
@@ -85,6 +93,51 @@
    "fieldtype": "Select",
    "label": "Sector",
    "options": "\nAll Other Sectors\nSteel\nFMCG\nTextile\nTelecom\nPetroleum\nElectricity Distribution\nGas Distribution\nServices\nAutomobile\nCNG Stations\nPharmaceuticals\nWholesale / Retails"
+  },
+  {
+   "fieldname": "section_accounts",
+   "fieldtype": "Section Break",
+   "label": "Tax Accounts"
+  },
+  {
+   "fieldname": "account_sales_tax",
+   "fieldtype": "Link",
+   "label": "Output Sales Tax Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "account_sales_tax_fixed",
+   "fieldtype": "Link",
+   "label": "Output Sales Tax (Fixed/Qty) Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "account_further_tax",
+   "fieldtype": "Link",
+   "label": "Further Sales Tax Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_acc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "account_advance_tax_236g",
+   "fieldtype": "Link",
+   "label": "Advance Tax 236G Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "account_input_sales_tax",
+   "fieldtype": "Link",
+   "label": "Input Sales Tax Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "account_input_sales_tax_fixed",
+   "fieldtype": "Link",
+   "label": "Input Sales Tax (Fixed/Qty) Account",
+   "options": "Account"
   },
   {
    "fieldname": "section_provinces",
