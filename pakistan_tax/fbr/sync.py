@@ -102,20 +102,48 @@ def sync_uoms(client=None):
 
 PERCENT_RE = re.compile(r"^\s*(\d+(?:\.\d+)?)\s*%\s*$")
 COMPOUND_RE = re.compile(
-	r"^\s*(\d+(?:\.\d+)?)\s*%\s*along\s*with\s*rupees\s*(\d+(?:\.\d+)?)\s*per\s*(\w+)",
+	r"^\s*(\d+(?:\.\d+)?)\s*%\s*along\s*with\s*rupees\s*(\d+(?:\.\d+)?)\s*per\s*([\w ]+?)\s*$",
 	re.IGNORECASE,
 )
-RS_FLAT_RE = re.compile(r"^\s*Rs\.?\s*(\d+(?:\.\d+)?)\s*$", re.IGNORECASE)
+# "Rs.700/MT", "Rs.250", "200/bill", "100/SqY", "Rs.1000"
+FIXED_RE = re.compile(
+	r"^\s*(?:Rs\.?\s*)?(\d+(?:\.\d+)?)\s*(?:/\s*([\w ]+?))?\s*$", re.IGNORECASE)
 
-UOM_WORDS = {"kilogram": "KG", "kg": "KG", "litre": "Liter", "liter": "Liter",
-	"mt": "MT", "ton": "MT"}
+# rate_desc unit token -> FBR UOM doc name (extend as new tokens appear)
+UOM_WORDS = {
+	"kilogram": "KG", "kg": "KG", "litre": "Liter", "liter": "Liter",
+	"mt": "MT", "ton": "MT", "sqy": "Square Yard", "set": "SET",
+	"kwh": "KWH", "bill": "Bill",
+}
+
+
+def _resolve_uom(token):
+	"""Map a rate_desc unit token to a UOM doc name — prefer an FBR-flagged UOM
+	matching the token exactly, then the alias map, then any existing UOM."""
+	if not token:
+		return None
+	token = token.strip()
+	exact_fbr = frappe.db.get_value("UOM", {"name": token, "custom_is_fbr_uom": 1})
+	if exact_fbr:
+		return exact_fbr
+	candidate = UOM_WORDS.get(token.lower(), token)
+	fbr_alias = frappe.db.get_value("UOM", {"name": candidate, "custom_is_fbr_uom": 1})
+	if fbr_alias:
+		return fbr_alias
+	return frappe.db.get_value("UOM", {"name": candidate})
 
 
 def parse_rate_desc(desc, rate_value=0):
-	"""Decompose a ratE_DESC string. Returns dict; needs_review=1 when unsure."""
+	"""Decompose a ratE_DESC string.
+
+	Fixed rates (Rs.700/MT, 100/SqY, Rs.1000) are deterministic: a per-quantity
+	amount charged via On Item Quantity, in the unit named (or the item's FBR
+	UOM when unit is omitted). needs_review is reserved for descriptions that
+	genuinely don't parse (e.g. "DTRE").
+	"""
 	desc = (desc or "").strip()
 	out = {"rate_type": "", "percent_component": 0, "fixed_component": 0,
-		"fixed_uom": None, "needs_review": 0}
+		"fixed_uom": None, "fixed_unit_label": None, "needs_review": 0}
 
 	if desc.lower() == "exempt":
 		out["rate_type"] = "Exempt"
@@ -133,22 +161,21 @@ def parse_rate_desc(desc, rate_value=0):
 		out["rate_type"] = "Compound"
 		out["percent_component"] = float(m.group(1))
 		out["fixed_component"] = float(m.group(2))
-		uom_word = m.group(3).lower()
-		out["fixed_uom"] = UOM_WORDS.get(uom_word)
-		if not out["fixed_uom"]:
-			out["needs_review"] = 1
+		out["fixed_unit_label"] = m.group(3).strip()
+		out["fixed_uom"] = _resolve_uom(out["fixed_unit_label"])
 		return out
 
-	m = RS_FLAT_RE.match(desc)
-	if m:
+	m = FIXED_RE.match(desc)
+	if m and ("rs" in desc.lower() or m.group(2)):
+		# Require Rs-prefix or a /unit suffix so a bare number is never
+		# silently classified (bare percentages always carry '%').
 		out["rate_type"] = "Fixed"
 		out["fixed_component"] = float(m.group(1))
-		out["needs_review"] = 1  # per-what is unknown ("Rs.1000" — per unit? per document?)
+		out["fixed_unit_label"] = (m.group(2) or "").strip() or None
+		out["fixed_uom"] = _resolve_uom(out["fixed_unit_label"])
 		return out
 
-	# "50/SqY" and other shapes: record value, flag for review
-	out["rate_type"] = "Fixed"
-	out["fixed_component"] = rate_value or 0
+	# Anything else ("DTRE", free text): flag for one-time human decomposition
 	out["needs_review"] = 1
 	return out
 

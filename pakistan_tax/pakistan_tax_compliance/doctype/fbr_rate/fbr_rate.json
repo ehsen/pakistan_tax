@@ -12,6 +12,7 @@
   "percent_component",
   "fixed_component",
   "fixed_uom",
+  "fixed_unit_label",
   "needs_review",
   "last_seen_on"
  ],
@@ -57,6 +58,11 @@
    "fieldtype": "Link",
    "label": "Fixed Component UOM",
    "options": "UOM"
+  },
+  {
+   "fieldname": "fixed_unit_label",
+   "fieldtype": "Data",
+   "label": "Fixed Unit Label (from rate description)"
   },
   {
    "description": "Set when the rate description could not be parsed confidently",
