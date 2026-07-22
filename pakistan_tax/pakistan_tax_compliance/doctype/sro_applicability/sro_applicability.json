@@ -1,0 +1,163 @@
+{
+ "actions": [],
+ "creation": "2026-07-22 15:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "description",
+  "company",
+  "enabled",
+  "retired",
+  "column_break_a",
+  "transaction_type",
+  "fbr_rate",
+  "sro",
+  "sro_item_serial",
+  "section_conditions",
+  "tax_category",
+  "column_break_b",
+  "valid_from",
+  "valid_upto",
+  "section_scope",
+  "scope",
+  "section_status",
+  "last_applied",
+  "items_affected"
+ ],
+ "fields": [
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "retired",
+   "fieldtype": "Check",
+   "label": "Retired",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "The saleType the concession files under (e.g. Goods at zero-rate, DTRE goods)",
+   "fieldname": "transaction_type",
+   "fieldtype": "Link",
+   "label": "Concession Transaction Type",
+   "options": "FBR Transaction Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "fbr_rate",
+   "fieldtype": "Link",
+   "label": "Concession Rate",
+   "options": "FBR Rate",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sro",
+   "fieldtype": "Link",
+   "label": "SRO",
+   "options": "FBR SRO"
+  },
+  {
+   "fieldname": "sro_item_serial",
+   "fieldtype": "Data",
+   "label": "SRO Item Serial"
+  },
+  {
+   "fieldname": "section_conditions",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "Set for buyer-level concessions (DTRE, EFS Exporter). Empty = applies to all buyers (goods-level)",
+   "fieldname": "tax_category",
+   "fieldtype": "Link",
+   "label": "Tax Category",
+   "options": "Tax Category"
+  },
+  {
+   "fieldname": "column_break_b",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "valid_from",
+   "fieldtype": "Date",
+   "label": "Valid From",
+   "reqd": 1
+  },
+  {
+   "description": "On expiry the daily job writes dated reversion rows back to each item's default template",
+   "fieldname": "valid_upto",
+   "fieldtype": "Date",
+   "label": "Valid Upto"
+  },
+  {
+   "fieldname": "section_scope",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "scope",
+   "fieldtype": "Table",
+   "label": "Scope",
+   "options": "SRO Applicability Scope",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_status",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "last_applied",
+   "fieldtype": "Datetime",
+   "label": "Last Applied",
+   "read_only": 1
+  },
+  {
+   "fieldname": "items_affected",
+   "fieldtype": "Int",
+   "label": "Items Affected",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-22 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "SRO Applicability",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

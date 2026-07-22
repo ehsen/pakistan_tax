@@ -141,14 +141,20 @@ doc_events = {
 			"pakistan_tax.transactions.submit.validate_and_snapshot",
 			"pakistan_tax.pra.controller.before_submit",
 		],
-		"on_submit": "pakistan_tax.tax_ledger.posting.on_invoice_submit",
+		"on_submit": [
+			"pakistan_tax.tax_ledger.posting.on_invoice_submit",
+			"pakistan_tax.tax_ledger.gl_party.stamp_tax_gl_party",
+		],
 		"on_cancel": "pakistan_tax.tax_ledger.posting.on_voucher_cancel",
 	},
 	"Purchase Invoice": {
 		"before_validate": "pakistan_tax.transactions.resolution.resolve_templates",
 		"validate": "pakistan_tax.transactions.line_taxes.update_line_tax_fields",
 		"before_submit": "pakistan_tax.transactions.submit.validate_and_snapshot",
-		"on_submit": "pakistan_tax.tax_ledger.posting.on_invoice_submit",
+		"on_submit": [
+			"pakistan_tax.tax_ledger.posting.on_invoice_submit",
+			"pakistan_tax.tax_ledger.gl_party.stamp_tax_gl_party",
+		],
 		"on_cancel": "pakistan_tax.tax_ledger.posting.on_voucher_cancel",
 	},
 	"Payment Entry": {
@@ -167,6 +173,7 @@ doc_events = {
 scheduler_events = {
 	"daily": [
 		"pakistan_tax.fbr.sync.daily_sync",
+		"pakistan_tax.pakistan_tax_compliance.doctype.sro_applicability.sro_applicability.apply_all",
 	],
 }
 

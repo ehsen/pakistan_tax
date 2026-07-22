@@ -1,0 +1,47 @@
+{
+ "actions": [],
+ "creation": "2026-07-22 15:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "hs_code_prefix",
+  "item_group",
+  "item"
+ ],
+ "fields": [
+  {
+   "description": "Matches items whose HS code starts with this",
+   "fieldname": "hs_code_prefix",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "HS Code Prefix"
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Group",
+   "options": "Item Group"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item",
+   "options": "Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-07-22 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "SRO Applicability Scope",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}

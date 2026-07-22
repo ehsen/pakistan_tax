@@ -84,24 +84,46 @@ def _apply_header_template(doc):
 		})
 
 
+def _effective_tax_category(doc):
+	"""Document category, else the party's — server-side inserts often skip
+	the UI path that copies it onto the document."""
+	if doc.get("tax_category"):
+		return doc.tax_category
+	if doc.doctype == "Sales Invoice" and doc.get("customer"):
+		return frappe.db.get_value("Customer", doc.customer, "tax_category")
+	if doc.doctype == "Purchase Invoice" and doc.get("supplier"):
+		return frappe.db.get_value("Supplier", doc.supplier, "tax_category")
+	return None
+
+
 def resolve_templates(doc, method=None):
 	if not doc.get("pk_is_tax_invoice"):
 		return
 
 	_apply_header_template(doc)
 	posting_date = doc.get("posting_date") or frappe.utils.nowdate()
+	tax_category = _effective_tax_category(doc)
 
 	for row in doc.get("items", []):
-		if row.get("item_tax_template"):
-			continue
 		if not row.get("item_code"):
 			continue
-		template = _from_item_master(row.item_code, doc.company,
-			doc.get("tax_category"), posting_date)
-		if not template:
-			tt = row.get("pk_fbr_transaction_type") or frappe.db.get_value(
-				"Item", row.item_code, "pk_fbr_transaction_type")
-			row.pk_fbr_transaction_type = tt
-			template = _from_transaction_type(tt, doc.company, posting_date)
-		if template:
-			row.item_tax_template = template
+		if not row.get("item_tax_template"):
+			template = _from_item_master(row.item_code, doc.company,
+				tax_category, posting_date)
+			if not template:
+				tt = row.get("pk_fbr_transaction_type") or frappe.db.get_value(
+					"Item", row.item_code, "pk_fbr_transaction_type")
+				row.pk_fbr_transaction_type = tt
+				template = _from_transaction_type(tt, doc.company, posting_date)
+			if template:
+				row.item_tax_template = template
+
+		# stamp SRO/serial from the applicability that produced this template
+		if row.get("item_tax_template") and not row.get("pk_sro_schedule"):
+			from pakistan_tax.pakistan_tax_compliance.doctype.sro_applicability\
+				.sro_applicability import find_sro_for_row
+			app = find_sro_for_row(row.item_code, doc.company, tax_category,
+				posting_date, row.item_tax_template)
+			if app:
+				row.pk_sro_schedule = app.sro
+				row.pk_sro_item_serial = app.sro_item_serial

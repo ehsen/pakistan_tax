@@ -92,6 +92,15 @@ CUSTOM_FIELDS = {
 			"insert_after": "account_head",
 			"module": MODULE,
 		},
+		{
+			"fieldname": "pk_track_party_wise",
+			"fieldtype": "Check",
+			"label": "Track Party-wise",
+			"description": "Stamp the document's party onto this row's GL entries "
+				"(account-level flag on the Account also enables this)",
+			"insert_after": "pk_tax_category",
+			"module": MODULE,
+		},
 	],
 	"Purchase Taxes and Charges": [
 		{
@@ -100,6 +109,26 @@ CUSTOM_FIELDS = {
 			"options": TAX_CATEGORY_OPTIONS,
 			"label": "Pakistan Tax Category",
 			"insert_after": "account_head",
+			"module": MODULE,
+		},
+		{
+			"fieldname": "pk_track_party_wise",
+			"fieldtype": "Check",
+			"label": "Track Party-wise",
+			"description": "Stamp the document's party onto this row's GL entries "
+				"(account-level flag on the Account also enables this)",
+			"insert_after": "pk_tax_category",
+			"module": MODULE,
+		},
+	],
+	"Account": [
+		{
+			"fieldname": "pk_track_party_wise",
+			"fieldtype": "Check",
+			"label": "Track Party-wise (Pakistan Tax)",
+			"description": "Tax rows posting to this account get the document's "
+				"party stamped on their GL entries",
+			"insert_after": "account_type",
 			"module": MODULE,
 		},
 	],

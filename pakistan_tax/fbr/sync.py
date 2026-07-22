@@ -393,9 +393,21 @@ def sync_sro_chain(client=None, for_date=None):
 
 # ---------------------------------------------------------------- HS UOM
 
+def ensure_customs_tariff_number(hs_code, description=None):
+	"""Item.customs_tariff_number is a Link — the record must exist."""
+	if not frappe.db.exists("Customs Tariff Number", hs_code):
+		frappe.get_doc({
+			"doctype": "Customs Tariff Number",
+			"tariff_number": hs_code,
+			"description": description or hs_code,
+		}).insert(ignore_permissions=True)
+	return hs_code
+
+
 def sync_hs_uom(hs_code, annexure_id=3, client=None):
 	"""On-demand: fetch and cache the FBR-allowed UOM(s) for an HS code."""
 	client = client or FBRClient()
+	ensure_customs_tariff_number(hs_code)
 	resp = client.hs_uom(hs_code, annexure_id)
 	if not resp.ok or not isinstance(resp.data, list):
 		return None

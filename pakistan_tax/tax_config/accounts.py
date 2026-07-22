@@ -77,4 +77,14 @@ def ensure_tax_accounts(company):
 		frappe.db.set_value("FBR Settings", settings_name, updates,
 			update_modified=False)
 		settings.reload()
+
+	# all app-managed tax accounts are party-tracked by default (§3.8)
+	for field, _account_name in OUTPUT_ACCOUNTS + INPUT_ACCOUNTS:
+		account = settings.get(field)
+		if account and not frappe.db.get_value("Account", account,
+				"pk_track_party_wise"):
+			frappe.db.set_value("Account", account, "pk_track_party_wise", 1,
+				update_modified=False)
+	frappe.clear_cache(doctype="Account")
+
 	return settings
