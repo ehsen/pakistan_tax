@@ -299,12 +299,21 @@ CUSTOM_FIELDS["Payment Entry"] = [
 		"insert_after": "pk_payer"},
 ]
 CUSTOM_FIELDS["Payment Entry Reference"] = [
+	{"fieldname": "pk_wht_rate", "fieldtype": "Link", "options": "WHT Rate",
+		"label": "WHT Rate", "insert_after": "allocated_amount",
+		"description": "Pick the exact rate scenario for THIS invoice — the same "
+			"section can carry different rates for different cases (goods vs. "
+			"services, company vs. non-company, etc.)"},
 	{"fieldname": "pk_wht_section", "fieldtype": "Link", "options": "WHT Section",
-		"label": "WHT Section", "insert_after": "allocated_amount"},
-	{"fieldname": "pk_wht_rate", "fieldtype": "Float", "label": "WHT Rate (%)",
-		"insert_after": "pk_wht_section"},
+		"label": "WHT Section", "insert_after": "pk_wht_rate", "read_only": 1,
+		"fetch_from": "pk_wht_rate.section"},
+	{"fieldname": "pk_wht_computed_rate", "fieldtype": "Float",
+		"label": "WHT Rate Applied (%)", "read_only": 1,
+		"insert_after": "pk_wht_section",
+		"description": "The filer or non-filer rate actually used, resolved from "
+			"the party's status at calculation time"},
 	{"fieldname": "pk_wht_amount", "fieldtype": "Currency", "label": "WHT Amount",
-		"insert_after": "pk_wht_rate"},
+		"read_only": 1, "insert_after": "pk_wht_computed_rate"},
 ]
 
 for _df_list in CUSTOM_FIELDS.values():
@@ -353,7 +362,14 @@ def before_install():
 def after_install():
 	create_custom_fields(CUSTOM_FIELDS, ignore_validate=True)
 
+	from pakistan_tax.wht.seed import _seed
+	_seed()
+
 
 def after_migrate():
-	# Idempotent — keeps fields present on every migrate
+	# Idempotent — keeps fields present, and seeds any new reference rows
+	# shipped in a later version of the app, on every migrate
 	create_custom_fields(CUSTOM_FIELDS, ignore_validate=True)
+
+	from pakistan_tax.wht.seed import _seed
+	_seed()

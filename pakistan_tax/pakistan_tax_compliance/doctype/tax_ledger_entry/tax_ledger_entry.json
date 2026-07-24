@@ -15,6 +15,7 @@
   "tax_party",
   "party_ntn",
   "section",
+  "wht_rate",
   "section_amounts",
   "taxable_amount",
   "tax_amount",
@@ -22,6 +23,8 @@
   "column_break_b",
   "voucher_type",
   "voucher_no",
+  "against_voucher_type",
+  "against_voucher",
   "cpr_reference",
   "match_reference",
   "is_reversal",
@@ -93,6 +96,13 @@
    "options": "WHT Section"
   },
   {
+   "fieldname": "wht_rate",
+   "fieldtype": "Link",
+   "label": "WHT Rate Scenario",
+   "options": "WHT Rate",
+   "description": "The specific rate scenario applied — for WHT rows only"
+  },
+  {
    "fieldname": "section_amounts",
    "fieldtype": "Section Break"
   },
@@ -126,6 +136,18 @@
    "fieldtype": "Dynamic Link",
    "label": "Voucher No",
    "options": "voucher_type"
+  },
+  {
+   "description": "For WHT rows on a Payment Entry: the specific invoice this deduction relates to (e.g. Purchase Invoice) — what suppliers actually ask to see",
+   "fieldname": "against_voucher_type",
+   "fieldtype": "Data",
+   "label": "Against Voucher Type"
+  },
+  {
+   "fieldname": "against_voucher",
+   "fieldtype": "Dynamic Link",
+   "label": "Against Voucher",
+   "options": "against_voucher_type"
   },
   {
    "fieldname": "cpr_reference",

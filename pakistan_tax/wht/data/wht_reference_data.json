@@ -1,0 +1,1049 @@
+{
+ "source": "FBR Tax Payment Nature Codes (wht rates.xlsx), parsed 2026-07-23. Rates as published in source; sections without a percentage figure in source text are flagged not_a_flat_rate for manual configuration. Exemption-code cross-reference intentionally omitted (source data corrupted).",
+ "sections": [
+  {
+   "section_code": "149",
+   "section_description": "Salary of Federal Government Employees"
+  },
+  {
+   "section_code": "150",
+   "section_description": "Dividend"
+  },
+  {
+   "section_code": "151(1)(a)",
+   "section_description": "Profit on Debt from NSC / PO Deposits"
+  },
+  {
+   "section_code": "151(1)(b)",
+   "section_description": "Profit on Debt from Bank Accounts / Deposits"
+  },
+  {
+   "section_code": "151(1)(c)",
+   "section_description": "Profit on Debt from Government Securities"
+  },
+  {
+   "section_code": "151(1)(d)",
+   "section_description": "Profit on Debt from Others"
+  },
+  {
+   "section_code": "152",
+   "section_description": "Royalty / Fee for Technical Services to a Non-Resident covered under ADTT"
+  },
+  {
+   "section_code": "152(1)",
+   "section_description": "Royalty / Fee for Technical Services to a Non-Resident"
+  },
+  {
+   "section_code": "152(1A)(a)",
+   "section_description": "Payment for Contracts for Construction, Assembly or Installation to a Non-Resident"
+  },
+  {
+   "section_code": "152(1A)(b)",
+   "section_description": "Payment for Services, Contracts to a Non-Resident"
+  },
+  {
+   "section_code": "152(1A)(c)",
+   "section_description": "Fee for Advertisement Services to a Non-Resident"
+  },
+  {
+   "section_code": "152(1AA)",
+   "section_description": "Insurance / Reinsurance Premium to a Non-Resident"
+  },
+  {
+   "section_code": "152(1AAA)",
+   "section_description": "Fee for Advertisement Services to a Non-Resident media person"
+  },
+  {
+   "section_code": "152(2)",
+   "section_description": "Profit on Debt to a Non-Resident"
+  },
+  {
+   "section_code": "152(2A)(a)",
+   "section_description": "Payment for Goods to a PE of a Non-Resident"
+  },
+  {
+   "section_code": "152(2A)(b)",
+   "section_description": "Payment for Transport Services to a PE of a Non-Resident"
+  },
+  {
+   "section_code": "152(2A)(c)",
+   "section_description": "Payment for Contracts to a PE of a Non-Resident"
+  },
+  {
+   "section_code": "153(1)(a)",
+   "section_description": "Payment for Goods"
+  },
+  {
+   "section_code": "153(1)(b)",
+   "section_description": "Payment for Services"
+  },
+  {
+   "section_code": "153(1)(c)",
+   "section_description": "Receipts from Contracts (Other Than Companies)"
+  },
+  {
+   "section_code": "155",
+   "section_description": "Rent of Property"
+  },
+  {
+   "section_code": "156B",
+   "section_description": "Withdrawal from Pension Fund"
+  },
+  {
+   "section_code": "231AA",
+   "section_description": "Certain Banking Transactions"
+  },
+  {
+   "section_code": "231AB",
+   "section_description": "Advance tax on cash withdrawal"
+  },
+  {
+   "section_code": "231B(1)",
+   "section_description": "Motor Vehicle Registration Fee"
+  },
+  {
+   "section_code": "231B(2)",
+   "section_description": "Motor Vehicle Transfer Fee"
+  },
+  {
+   "section_code": "231B(3)",
+   "section_description": "Motor Vehicle Sale \u2013 on value of vehicle"
+  },
+  {
+   "section_code": "233A(1)(a)",
+   "section_description": "Value of Shares traded through a member of a Stock exchange"
+  },
+  {
+   "section_code": "233A(1)(b)",
+   "section_description": "Value of Shares traded through a member of a Stock exchange"
+  },
+  {
+   "section_code": "233A(1)(c)",
+   "section_description": "Value of Shares traded by a member of a Stock exchange"
+  },
+  {
+   "section_code": "233AA",
+   "section_description": "Margin Financing, Margin Trading or Securities Lending"
+  },
+  {
+   "section_code": "234",
+   "section_description": "Goods Transport Public Vehicle Tax"
+  },
+  {
+   "section_code": "235",
+   "section_description": "Electricity Bill of Commercial Consumer"
+  },
+  {
+   "section_code": "235A",
+   "section_description": "Electricity Bill of Domestic Consumer"
+  },
+  {
+   "section_code": "236(1)(a)",
+   "section_description": "Telephone Bill"
+  },
+  {
+   "section_code": "236(1)(b)",
+   "section_description": "Prepaid Telephone Card"
+  },
+  {
+   "section_code": "236(1)(c)",
+   "section_description": "Phone Unit"
+  },
+  {
+   "section_code": "236(1)(d)",
+   "section_description": "Internet Bill"
+  },
+  {
+   "section_code": "236(1)(e)",
+   "section_description": "Prepaid Internet Card"
+  },
+  {
+   "section_code": "236A",
+   "section_description": "Purchase by Auction"
+  },
+  {
+   "section_code": "236B",
+   "section_description": "Domestic Air Ticket Charges"
+  },
+  {
+   "section_code": "236C",
+   "section_description": "Sale / Transfer of Immovable Property"
+  },
+  {
+   "section_code": "236D",
+   "section_description": "Functions / Gatherings Charges"
+  },
+  {
+   "section_code": "236E",
+   "section_description": "Certification of Foreign-Produced TV Play Single"
+  },
+  {
+   "section_code": "236F",
+   "section_description": "Issuance of License to Cable Opeartors"
+  },
+  {
+   "section_code": "236G",
+   "section_description": "Purchase of other commodities by Distributors / Dealers / Wholesalers"
+  },
+  {
+   "section_code": "236H",
+   "section_description": "Purchase by Retailers"
+  },
+  {
+   "section_code": "236I",
+   "section_description": "Educational Institution Fee"
+  },
+  {
+   "section_code": "236J",
+   "section_description": "Issuance / Renewal of License to Dealers / Commission Agents / Arhatis"
+  },
+  {
+   "section_code": "236K",
+   "section_description": "Purchase / Transfer of Immovable Property"
+  },
+  {
+   "section_code": "236L",
+   "section_description": "Purchase of International Air Ticket"
+  },
+  {
+   "section_code": "236N",
+   "section_description": "Issuance of Bonus Shares by Companies not quoted on Stock Exchange"
+  },
+  {
+   "section_code": "236P",
+   "section_description": "Banking transactions otherwise than through cash"
+  },
+  {
+   "section_code": "236Q",
+   "section_description": "Payment for use or right to use industrial, commercial and scientific equipment"
+  },
+  {
+   "section_code": "236R",
+   "section_description": "Education related expenses remitted abroad"
+  },
+  {
+   "section_code": "236S",
+   "section_description": "Dividend in specie"
+  },
+  {
+   "section_code": "236T",
+   "section_description": "Purchase of future commodity contracts"
+  },
+  {
+   "section_code": "236Z",
+   "section_description": "Issuance of Bonus shares by companies"
+  }
+ ],
+ "rates": [
+  {
+   "section": "149",
+   "condition": "Salary of Corporate Sector Employees",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64020003",
+   "reference_note": "Salary of Corporate Sector Employees u/s 149"
+  },
+  {
+   "section": "149",
+   "condition": "Salary of Federal Government Employees",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64020001",
+   "reference_note": "Salary of Federal Government Employees u/s 149"
+  },
+  {
+   "section": "149",
+   "condition": "Salary of Other Employees",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64020004",
+   "reference_note": "Salary of Other Employees u/s 149"
+  },
+  {
+   "section": "149",
+   "condition": "Salary of Provincial Government Employees",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64020002",
+   "reference_note": "Salary of Provincial Government Employees u/s 149"
+  },
+  {
+   "section": "150",
+   "condition": "Dividend / 236S (Non-ATL is 15%- Resident no non-ATL rate)",
+   "filer_rate": 7.5,
+   "non_filer_rate": 7.5,
+   "not_a_flat_rate": false,
+   "nature_code": "64030053",
+   "reference_note": "Dividend u/s 150 / 236S @7.5% (Non-ATL is 15%- Resident no non-ATL rate)"
+  },
+  {
+   "section": "150",
+   "condition": "Dividend / 236S (Non-ATL is 30% -Resident no non-ATL rate)",
+   "filer_rate": 15.0,
+   "non_filer_rate": 15.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64030054",
+   "reference_note": "Dividend u/s 150 / 236S @15% (Non-ATL is 30% -Resident no non-ATL rate)"
+  },
+  {
+   "section": "150",
+   "condition": "Dividend / 236S (non-ATL is 50% - Resident no non-ATL rate)",
+   "filer_rate": 25.0,
+   "non_filer_rate": 25.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64030059",
+   "reference_note": "Dividend u/s 150 / 236S @ 25% (non-ATL is 50% - Resident no non-ATL rate)"
+  },
+  {
+   "section": "150",
+   "condition": "Dividend [Code 64030052]",
+   "filer_rate": 7.5,
+   "non_filer_rate": 15.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64030052",
+   "reference_note": "Dividend u/s 150 (ATL @ 7.5% / Non-ATL @ 15%)"
+  },
+  {
+   "section": "150",
+   "condition": "Dividend [Code 64030057]",
+   "filer_rate": 20.0,
+   "non_filer_rate": 20.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64030057",
+   "reference_note": "Dividend u/s 150 @20%"
+  },
+  {
+   "section": "150",
+   "condition": "Dividend to a Non-Resident covered under ADTT / u/s 5",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64030099",
+   "reference_note": "Dividend to a Non-Resident covered under ADTT u/s 150 / u/s 5"
+  },
+  {
+   "section": "151(1)(a)",
+   "condition": "Profit on Debt from NSC / PO Deposits",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64040001, 64040051",
+   "reference_note": "151(1)(a) - Profit on Debt u/s 151 from NSC / PO Deposits"
+  },
+  {
+   "section": "151(1)(b)",
+   "condition": "Profit on Debt from Bank Accounts / Deposits",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64040002, 64040052",
+   "reference_note": "Profit on Debt u/s 151(1)(b) from Bank Accounts / Deposits"
+  },
+  {
+   "section": "151(1)(c)",
+   "condition": "Profit on Debt from Government Securities",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64040003, 64040053",
+   "reference_note": "Profit on Debt u/s 151(1)(c) from Government Securities"
+  },
+  {
+   "section": "151(1)(d)",
+   "condition": "Profit on Debt from Others",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64040004, 64040054",
+   "reference_note": "151(1) (d) - Profit on Debt u/s 151 from Others"
+  },
+  {
+   "section": "152",
+   "condition": "Payment for Goods, Services, Contracts, Rent, etc. to a Non-Resident covered under ADTT",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050098",
+   "reference_note": "Payment for Goods, Services, Contracts, Rent, etc. to a Non-Resident covered under ADTT"
+  },
+  {
+   "section": "152",
+   "condition": "Profit on Debt to a Non-Resident covered under ADTT",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050099",
+   "reference_note": "Profit on Debt to a Non-Resident covered under ADTT"
+  },
+  {
+   "section": "152",
+   "condition": "Royalty / Fee for Technical Services to a Non-Resident covered under ADTT",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050097",
+   "reference_note": "Royalty / Fee for Technical Services to a Non-Resident covered under ADTT"
+  },
+  {
+   "section": "152(1)",
+   "condition": "Royalty / Fee for Technical Services to a Non-Resident",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050051",
+   "reference_note": "Royalty / Fee for Technical Services to a Non-Resident u/s 152(1) / Division IV, Part I, 1st Schedule"
+  },
+  {
+   "section": "152(1A)(a)",
+   "condition": "Payment for Contracts for Construction, Assembly or Installation to a Non-Resident",
+   "filer_rate": 7.0,
+   "non_filer_rate": 14.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64050052",
+   "reference_note": "Payment for Contracts for Construction, Assembly or Installation to a Non-Resident u/s 152(1A)(a) / Division II, Part III, 1st Schedule (ATL @ 7% / Non-ATL @ 14%)"
+  },
+  {
+   "section": "152(1A)(b)",
+   "condition": "Payment for Services, Contracts to a Non-Resident",
+   "filer_rate": 7.0,
+   "non_filer_rate": 14.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64050053",
+   "reference_note": "Payment for Services, Contracts to a Non-Resident u/s 152(1A)(b) / Division II, Part III, 1st Schedule (ATL @ 7% / Non-ATL @ 14%)"
+  },
+  {
+   "section": "152(1A)(c)",
+   "condition": "Fee for Advertisement Services to a Non-Resident",
+   "filer_rate": 7.0,
+   "non_filer_rate": 14.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64050054",
+   "reference_note": "Fee for Advertisement Services to a Non-Resident u/s 152(1A)(c) / Division II, Part III, 1st Schedule (ATL @ 7% / Non-ATL @ 14%)"
+  },
+  {
+   "section": "152(1AA)",
+   "condition": "Insurance / Reinsurance Premium to a Non-Resident",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050055",
+   "reference_note": "Insurance / Reinsurance Premium to a Non-Resident u/s 152(1AA) / Division II, Part III, 1st Schedule"
+  },
+  {
+   "section": "152(1AAA)",
+   "condition": "Fee for Advertisement Services to a Non-Resident",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050056",
+   "reference_note": "Fee for Advertisement Services to a Non-Resident u/s 152(1AAA) / Division II, Part III, 1st Schedule"
+  },
+  {
+   "section": "152(1AAA)",
+   "condition": "Fee for Advertisement Services to a Non-Resident media person",
+   "filer_rate": 10.0,
+   "non_filer_rate": 20.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64050007",
+   "reference_note": "Fee for Advertisement Services to a Non-Resident media person u/s 152(1AAA) / Division II, Part III, 1st Schedule (ATL @ 10% / Non-ATL @ 20%)"
+  },
+  {
+   "section": "152(2)",
+   "condition": "Profit on Debt / u/c (5A), Part II, 2nd Schedule",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050096",
+   "reference_note": "Profit on Debt u/s 152(2) / u/c (5A), Part II, 2nd Schedule"
+  },
+  {
+   "section": "152(2)",
+   "condition": "Profit on Debt to a Non-Resident",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050008",
+   "reference_note": "Profit on Debt to a Non-Resident u/s 152(2)"
+  },
+  {
+   "section": "152(2A)(a)",
+   "condition": "Payment for Goods to a PE of a Non-Resident",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050009",
+   "reference_note": "Payment for Goods to a PE of a Non-Resident u/s 152(2A)(a) / Division II, Part III, 1st Schedule"
+  },
+  {
+   "section": "152(2A)(b)",
+   "condition": "Payment for Other Services to a PE of a Non-Resident",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050011",
+   "reference_note": "Payment for Other Services to a PE of a Non-Resident u/s 152(2A)(b) / Division II, Part III, 1st Schedule"
+  },
+  {
+   "section": "152(2A)(b)",
+   "condition": "Payment for Transport Services to a PE of a Non-Resident",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050010",
+   "reference_note": "Payment for Transport Services to a PE of a Non-Resident u/s 152(2A)(b) / Division II, Part III, 1st Schedule"
+  },
+  {
+   "section": "152(2A)(c)",
+   "condition": "Payment for Contracts to a PE of a Non-Resident",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64050012",
+   "reference_note": "Payment for Contracts to a PE of a Non-Resident u/s 152(2A)(c) / Division II, Part III, 1st Schedule"
+  },
+  {
+   "section": "153(1)(a)",
+   "condition": "Payment for Goods (For Companies)",
+   "filer_rate": 5.0,
+   "non_filer_rate": 10.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060058",
+   "reference_note": "Payment for Goods u/s 153(1)(a) (ATL @ 5% / Non-ATL @ 10%) for companies"
+  },
+  {
+   "section": "153(1)(a)",
+   "condition": "Payment for Goods (Other Than Companies)",
+   "filer_rate": 5.5,
+   "non_filer_rate": 11.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060059",
+   "reference_note": "Payment for Goods u/s 153(1)(a) (ATL @ 5.5% / Non-ATL @ 11%) other than companies"
+  },
+  {
+   "section": "153(1)(a)",
+   "condition": "Payment for Goods [Code 64060002]",
+   "filer_rate": 1.0,
+   "non_filer_rate": 2.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060002, 64060052",
+   "reference_note": "Payment for Goods u/s 153(1)(a) (ATL @ 1% / Non-ATL @ 2%)"
+  },
+  {
+   "section": "153(1)(a)",
+   "condition": "Payment for Goods [Code 64060003]",
+   "filer_rate": 1.5,
+   "non_filer_rate": 3.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060003, 64060053",
+   "reference_note": "Payment for Goods u/s 153(1)(a) (ATL @ 1.5% / Non-ATL @ 3%)"
+  },
+  {
+   "section": "153(1)(a)",
+   "condition": "Payment for Goods [Code 64060008]",
+   "filer_rate": 4.0,
+   "non_filer_rate": 8.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060008",
+   "reference_note": "Payment for Goods u/s 153(1)(a) (ATL @ 4% / Non-ATL @ 8%)"
+  },
+  {
+   "section": "153(1)(a)",
+   "condition": "Payment for Goods [Code 64060009]",
+   "filer_rate": 4.5,
+   "non_filer_rate": 9.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060009",
+   "reference_note": "Payment for Goods u/s 153(1)(a) (ATL @ 4.5% / Non-ATL @ 9%)"
+  },
+  {
+   "section": "153(1)(b)",
+   "condition": "Payment for Services (For Companies)",
+   "filer_rate": 9.0,
+   "non_filer_rate": 18.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060166",
+   "reference_note": "Payment for Services u/s 153(1)(b) (ATL @ 9% / Non-ATL @ 18%) for companies"
+  },
+  {
+   "section": "153(1)(b)",
+   "condition": "Payment for Services (Other Than Companies)",
+   "filer_rate": 11.0,
+   "non_filer_rate": 22.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060170",
+   "reference_note": "Payment for Services u/s 153(1)(b) (ATL @ 11% / Non-ATL @ 22%) other than companies"
+  },
+  {
+   "section": "153(1)(b)",
+   "condition": "Payment for Services [Code 64060102]",
+   "filer_rate": 1.0,
+   "non_filer_rate": 1.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060102, 64060152",
+   "reference_note": "Payment for Services u/s 153(1)(b) @1%"
+  },
+  {
+   "section": "153(1)(b)",
+   "condition": "Payment for Services [Code 64060104]",
+   "filer_rate": 2.0,
+   "non_filer_rate": 2.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060104, 64060154",
+   "reference_note": "Payment for Services u/s 153(1)(b) @2%"
+  },
+  {
+   "section": "153(1)(b)",
+   "condition": "Payment for Services [Code 64060116]",
+   "filer_rate": 8.0,
+   "non_filer_rate": 8.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060116",
+   "reference_note": "Payment for Services u/s 153(1)(b) @8%"
+  },
+  {
+   "section": "153(1)(c)",
+   "condition": "Receipts from Contracts",
+   "filer_rate": 7.5,
+   "non_filer_rate": 15.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060265",
+   "reference_note": "Receipts from Contracts u/s 153(1)(c) (ATL @ 7.5% / Non-ATL @ 15%)"
+  },
+  {
+   "section": "153(1)(c)",
+   "condition": "Receipts from Contracts (Other Than Companies)",
+   "filer_rate": 8.0,
+   "non_filer_rate": 16.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64060264",
+   "reference_note": "Receipts from Contracts u/s 153(1)(c) (ATL @ 8% / Non-ATL @ 16%) other than companies"
+  },
+  {
+   "section": "155",
+   "condition": "Rent of Property",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64080001",
+   "reference_note": "Rent of Property u/s 155"
+  },
+  {
+   "section": "156B",
+   "condition": "Withdrawal from Pension Fund",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64090201",
+   "reference_note": "Withdrawal from Pension Fund u/s 156B"
+  },
+  {
+   "section": "231AA",
+   "condition": "Certain Banking Transactions",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.6,
+   "not_a_flat_rate": false,
+   "nature_code": "64100201",
+   "reference_note": "Certain Banking Transactions u/s 231AA (Non-ATL @ 0.6%)"
+  },
+  {
+   "section": "231AB",
+   "condition": "Advance tax on cash withdrawal",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64100101",
+   "reference_note": "Advance tax on cash withdrawal u/s 231AB"
+  },
+  {
+   "section": "231B(1)",
+   "condition": "Motor Vehicle Registration Fee",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64100301",
+   "reference_note": "Motor Vehicle Registration Fee u/s 231B(1)"
+  },
+  {
+   "section": "231B(2)",
+   "condition": "Motor Vehicle Transfer Fee",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64100302",
+   "reference_note": "Motor Vehicle Transfer Fee u/s 231B(2)"
+  },
+  {
+   "section": "231B(3)",
+   "condition": "Motor Vehicle Sale \u2013 on value of vehicle",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64100303",
+   "reference_note": "Motor Vehicle Sale u/s 231B(3) \u2013 on value of vehicle"
+  },
+  {
+   "section": "233A(1)(a)",
+   "condition": "Value of Shares traded through a member of a Stock exchange",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64120101",
+   "reference_note": "Value of Shares traded through a member of a Stock exchange u/s 233A (1)(a)"
+  },
+  {
+   "section": "233A(1)(b)",
+   "condition": "Value of Shares traded through a member of a Stock exchange",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64120102",
+   "reference_note": "Value of Shares traded through a member of a Stock exchange u/s 233A (1)(b)"
+  },
+  {
+   "section": "233A(1)(c)",
+   "condition": "Value of Shares traded by a member of a Stock exchange",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64120103",
+   "reference_note": "Value of Shares traded by a member of a Stock exchange u/s 233A (1)(c)"
+  },
+  {
+   "section": "233AA",
+   "condition": "Margin Financing, Margin Trading or Securities Lending",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64120201",
+   "reference_note": "Margin Financing, Margin Trading or Securities Lending u/s 233AA"
+  },
+  {
+   "section": "234",
+   "condition": "Goods Transport Public Vehicle Tax",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64130001",
+   "reference_note": "Goods Transport Public Vehicle Tax u/s 234"
+  },
+  {
+   "section": "234",
+   "condition": "Passenger Transport Public Vehicle Tax",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64130002",
+   "reference_note": "Passenger Transport Public Vehicle Tax u/s 234"
+  },
+  {
+   "section": "234",
+   "condition": "Private Vehicle Tax",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64130003",
+   "reference_note": "Private Vehicle Tax u/s 234"
+  },
+  {
+   "section": "235",
+   "condition": "Electricity Bill of Commercial Consumer",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64140001",
+   "reference_note": "Electricity Bill of Commercial Consumer u/s 235"
+  },
+  {
+   "section": "235",
+   "condition": "Electricity Bill of Industrial Consumer",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64140002",
+   "reference_note": "Electricity Bill of Industrial Consumer u/s 235"
+  },
+  {
+   "section": "235A",
+   "condition": "Electricity Bill of Domestic Consumer",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64140101",
+   "reference_note": "Electricity Bill of Domestic Consumer u/s 235A"
+  },
+  {
+   "section": "236(1)(a)",
+   "condition": "Cellphone Bill",
+   "filer_rate": 15.0,
+   "non_filer_rate": 15.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64150002",
+   "reference_note": "Cellphone Bill u/s 236(1)(a) @15%"
+  },
+  {
+   "section": "236(1)(a)",
+   "condition": "Telephone Bill",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150001",
+   "reference_note": "Telephone Bill u/s 236(1)(a)"
+  },
+  {
+   "section": "236(1)(b)",
+   "condition": "Prepaid Telephone Card",
+   "filer_rate": 15.0,
+   "non_filer_rate": 15.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64150003",
+   "reference_note": "Prepaid Telephone Card u/s 236(1)(b) @15%"
+  },
+  {
+   "section": "236(1)(c)",
+   "condition": "Phone Unit",
+   "filer_rate": 15.0,
+   "non_filer_rate": 15.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64150004",
+   "reference_note": "Phone Unit u/s 236(1)(c) @15%"
+  },
+  {
+   "section": "236(1)(d)",
+   "condition": "Internet Bill",
+   "filer_rate": 15.0,
+   "non_filer_rate": 15.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64150005",
+   "reference_note": "Internet Bill u/s 236(1)(d) @15%"
+  },
+  {
+   "section": "236(1)(e)",
+   "condition": "Prepaid Internet Card",
+   "filer_rate": 15.0,
+   "non_filer_rate": 15.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64150006",
+   "reference_note": "Prepaid Internet Card u/s 236(1)(e) @15%"
+  },
+  {
+   "section": "236A",
+   "condition": "Purchase by Auction",
+   "filer_rate": 10.0,
+   "non_filer_rate": 20.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64150101",
+   "reference_note": "Purchase by Auction u/s 236A (ATL @ 10% / Non-ATL @ 20%)"
+  },
+  {
+   "section": "236B",
+   "condition": "Domestic Air Ticket Charges",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150201",
+   "reference_note": "Domestic Air Ticket Charges u/s 236B"
+  },
+  {
+   "section": "236C",
+   "condition": "Sale / Transfer of Immovable Property",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150301",
+   "reference_note": "Sale / Transfer of Immovable Property u/s 236C"
+  },
+  {
+   "section": "236D",
+   "condition": "Functions / Gatherings Charges",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150401",
+   "reference_note": "Functions / Gatherings Charges u/s 236D"
+  },
+  {
+   "section": "236E",
+   "condition": "Certification of Foreign-Produced TV Drama Serial",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150502",
+   "reference_note": "Certification of Foreign-Produced TV Drama Serial u/s 236E"
+  },
+  {
+   "section": "236E",
+   "condition": "Certification of Foreign-Produced TV Play Single",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150501",
+   "reference_note": "Certification of Foreign-Produced TV Play Single u/s 236E"
+  },
+  {
+   "section": "236F",
+   "condition": "Issuance of License to Cable Opeartors",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150601",
+   "reference_note": "Issuance of License to Cable Opeartors u/s 236F"
+  },
+  {
+   "section": "236F",
+   "condition": "Issuance of License to IPTV, FM Radio, MMDS, Mobile TV, Mobile Audio, Satellite TV Channel and Landing Rights",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150603",
+   "reference_note": "Issuance of License to IPTV, FM Radio, MMDS, Mobile TV, Mobile Audio, Satellite TV Channel and Landing Rights u/s 236F"
+  },
+  {
+   "section": "236F",
+   "condition": "Renewal of License to Cable Opeartors",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150602",
+   "reference_note": "Renewal of License to Cable Opeartors u/s 236F"
+  },
+  {
+   "section": "236F",
+   "condition": "Renewal of License to IPTV, FM Radio, MMDS, Mobile TV, Mobile Audio, Satellite TV Channel and Landing Rights",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150604",
+   "reference_note": "Renewal of License to IPTV, FM Radio, MMDS, Mobile TV, Mobile Audio, Satellite TV Channel and Landing Rights u/s 236F"
+  },
+  {
+   "section": "236G",
+   "condition": "Purchase of Fertilizer by Distributors / Dealers / Wholesalers u/s 236G (ATL (IT & ST) @0.25% / Non-ATL (ST) & ATL (IT) @0.7% / Non-ATL (IT) @2%)",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150702",
+   "reference_note": "Purchase of Fertilizer by Distributors / Dealers / Wholesalers u/s 236G (ATL (IT & ST) @0.25% / Non-ATL (ST) & ATL (IT) @0.7% / Non-ATL (IT) @2%)"
+  },
+  {
+   "section": "236G",
+   "condition": "Purchase of other commodities by Distributors / Dealers / Wholesalers",
+   "filer_rate": 0.1,
+   "non_filer_rate": 2.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64150701",
+   "reference_note": "Purchase of other commodities by Distributors / Dealers / Wholesalers u/s 236G (ATL @ 0.1% / Non-ATL @ 2%)"
+  },
+  {
+   "section": "236H",
+   "condition": "Purchase by Retailers",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150801",
+   "reference_note": "Purchase by Retailers u/s 236H"
+  },
+  {
+   "section": "236I",
+   "condition": "Educational Institution Fee",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64150901",
+   "reference_note": "Educational Institution Fee u/s 236I"
+  },
+  {
+   "section": "236J",
+   "condition": "Issuance / Renewal of License to Dealers / Commission Agents / Arhatis",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64151001",
+   "reference_note": "Issuance / Renewal of License to Dealers / Commission Agents / Arhatis u/s 236J"
+  },
+  {
+   "section": "236K",
+   "condition": "Purchase / Transfer of Immovable Property",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64151101",
+   "reference_note": "Purchase / Transfer of Immovable Property u/s 236K"
+  },
+  {
+   "section": "236L",
+   "condition": "Purchase of International Air Ticket",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64151201",
+   "reference_note": "Purchase of International Air Ticket u/s 236L"
+  },
+  {
+   "section": "236N",
+   "condition": "Issuance of Bonus Shares by Companies not quoted on Stock Exchange",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64151451",
+   "reference_note": "Issuance of Bonus Shares by Companies not quoted on Stock Exchange u/s 236N"
+  },
+  {
+   "section": "236P",
+   "condition": "Banking transactions otherwise than through cash",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.6,
+   "not_a_flat_rate": false,
+   "nature_code": "64151501",
+   "reference_note": "Banking transactions otherwise than through cash u/s 236P (Non-ATL @ 0.6%)"
+  },
+  {
+   "section": "236Q",
+   "condition": "Payment for use or right to use industrial, commercial and scientific equipment",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64151651",
+   "reference_note": "Payment for use or right to use industrial, commercial and scientific equipment u/s 236Q"
+  },
+  {
+   "section": "236R",
+   "condition": "Education related expenses remitted abroad",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64151701",
+   "reference_note": "Education related expenses remitted abroad u/s 236R"
+  },
+  {
+   "section": "236S",
+   "condition": "Dividend in specie",
+   "filer_rate": 15.0,
+   "non_filer_rate": 30.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64151801",
+   "reference_note": "Dividend in specie u/s 236S (ATL @ 15% / Non-ATL @ 30%)"
+  },
+  {
+   "section": "236T",
+   "condition": "Purchase of future commodity contracts",
+   "filer_rate": 0.0,
+   "non_filer_rate": 0.0,
+   "not_a_flat_rate": true,
+   "nature_code": "64151901",
+   "reference_note": "Purchase of future commodity contracts u/s 236T"
+  },
+  {
+   "section": "236Z",
+   "condition": "Issuance of Bonus shares by companies",
+   "filer_rate": 10.0,
+   "non_filer_rate": 20.0,
+   "not_a_flat_rate": false,
+   "nature_code": "64151351",
+   "reference_note": "Issuance of Bonus shares by companies u/s 236Z (ATL @ 10% / Non-ATL @ 20%)"
+  }
+ ]
+}
