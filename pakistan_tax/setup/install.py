@@ -297,6 +297,20 @@ CUSTOM_FIELDS["Payment Entry"] = [
 		"insert_after": "party_name"},
 	{"fieldname": "pk_apply_wht", "fieldtype": "Check", "label": "Apply WHT",
 		"insert_after": "pk_payer"},
+	{"fieldname": "pk_advance_wht_rate", "fieldtype": "Link", "options": "WHT Rate",
+		"label": "Advance WHT Rate", "insert_after": "pk_apply_wht",
+		"description": "WHT is due at the time of payment even when there is no "
+			"invoice yet (e.g. an advance to a supplier). Set this to withhold "
+			"on the unallocated portion of this payment. Computed ONCE at "
+			"submission — later linking this advance to an invoice (via "
+			"Payment Reconciliation) does not recompute or move it, since no "
+			"new cash movement occurs at that point."},
+	{"fieldname": "pk_advance_wht_computed_rate", "fieldtype": "Float",
+		"label": "Advance WHT Rate Applied (%)", "read_only": 1,
+		"insert_after": "pk_advance_wht_rate"},
+	{"fieldname": "pk_advance_wht_amount", "fieldtype": "Currency",
+		"label": "Advance WHT Amount", "read_only": 1,
+		"insert_after": "pk_advance_wht_computed_rate"},
 ]
 CUSTOM_FIELDS["Payment Entry Reference"] = [
 	{"fieldname": "pk_wht_rate", "fieldtype": "Link", "options": "WHT Rate",

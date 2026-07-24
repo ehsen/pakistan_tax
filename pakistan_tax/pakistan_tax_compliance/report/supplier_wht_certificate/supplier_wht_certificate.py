@@ -15,6 +15,7 @@ def execute(filters=None):
 		{"label": "Against Invoice", "fieldname": "against_voucher",
 			"fieldtype": "Dynamic Link", "options": "against_voucher_type",
 			"width": 130},
+		{"label": "Note", "fieldname": "advance_note", "width": 170},
 		{"label": "Section", "fieldname": "section", "fieldtype": "Link",
 			"options": "WHT Section", "width": 100},
 		{"label": "Applies When", "fieldname": "condition", "width": 150},
@@ -48,7 +49,10 @@ def execute(filters=None):
 			(case when tle.taxable_amount != 0
 				then round(tle.tax_amount / tle.taxable_amount * 100, 2)
 				else 0 end) as rate_applied,
-			tle.taxable_amount, tle.tax_amount, tle.status, tle.cpr_reference
+			tle.taxable_amount, tle.tax_amount, tle.status, tle.cpr_reference,
+			(case when tle.is_advance = 1
+				then 'Advance payment — no invoice at time of payment'
+				else '' end) as advance_note
 		from `tabTax Ledger Entry` tle
 		left join `tabWHT Rate` wr on wr.name = tle.wht_rate
 		where {cond}

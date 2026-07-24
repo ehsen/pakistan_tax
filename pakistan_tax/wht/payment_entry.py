@@ -11,9 +11,24 @@ WHT Rate — not just a WHT Section — on each Payment Entry Reference row; the
 header Advance Taxes and Charges rows are only the GL-account-level rollup
 of those per-invoice decisions, grouped by section.
 
-Runs in before_validate so the appended rows are included in the engine's own
-totals calculation. Rows this module manages are tagged via pk-prefixed
-description; other manually added tax rows are never touched."""
+Advances: the law taxes payment, not invoicing — a supplier advance with no
+invoice yet is still subject to WHT at the time of payment. That portion has
+no reference row to hang a rate off of, so `pk_advance_wht_rate` on the
+Payment Entry itself covers whatever part of paid/received_amount isn't
+allocated to any reference. It is computed manually here (NOT read from the
+native `unallocated_amount` field) because this hook runs in before_validate,
+before core Payment Entry.validate() has recomputed that field for the
+current save.
+
+Frozen-at-submit, deliberately: once docstatus == 1 this function is a no-op.
+ERPNext's Payment Reconciliation Tool later re-saves a submitted Payment
+Entry in place (new reference row appended, `ignore_validate_update_after_submit`
+flag set) to link an advance to the invoice it eventually settles — that
+re-save still fires this hook, but no new cash moved, so nothing should
+recompute. The tax was already fixed the moment the payment was made.
+
+Rows this module manages are tagged via pk-prefixed description; other
+manually added tax rows are never touched."""
 
 import frappe
 from frappe import _
@@ -43,13 +58,32 @@ def _validate_dated_coverage(wht_rate, posting_date):
 			"section/condition").format(wht_rate.name, wht_rate.valid_upto))
 
 
+def _advance_base_amount(doc):
+	"""Portion of this payment not allocated to any reference — computed
+	manually since core Payment Entry.validate() hasn't run yet at
+	before_validate time, so doc.unallocated_amount may still be stale."""
+	base_field = "paid_amount" if doc.payment_type == "Pay" else "received_amount"
+	total = flt(doc.get(base_field))
+	allocated = sum(flt(ref.allocated_amount) for ref in doc.get("references", []))
+	return flt(total - allocated, 2)
+
+
 def calculate_wht(doc, method=None):
 	if doc.doctype != "Payment Entry":
+		return
+
+	# Frozen at submit: WHT is fixed the moment cash moves. A later re-save
+	# (e.g. Payment Reconciliation linking this payment to an invoice) must
+	# never recompute or move what was already withheld.
+	if doc.docstatus == 1:
 		return
 
 	# drop rows we previously generated (keep any the user added by hand)
 	doc.taxes = [t for t in (doc.get("taxes") or [])
 		if not (t.description or "").startswith(WHT_TAG)]
+
+	doc.pk_advance_wht_computed_rate = 0
+	doc.pk_advance_wht_amount = 0
 
 	if not doc.get("pk_apply_wht"):
 		return
@@ -81,6 +115,25 @@ def calculate_wht(doc, method=None):
 		ref.pk_wht_amount = amount
 
 		summary[section_name] = summary.get(section_name, 0) + amount
+
+	# Advance portion: money paid with no invoice reference yet. Still
+	# taxable "at the time of payment" per law — folds into the same
+	# per-section rollup so GL posts once per section either way.
+	if doc.get("pk_advance_wht_rate"):
+		advance_base = _advance_base_amount(doc)
+		if advance_base > 0:
+			wht_rate = frappe.get_cached_doc("WHT Rate", doc.pk_advance_wht_rate)
+			_validate_dated_coverage(wht_rate, doc.posting_date)
+			section_name = wht_rate.section
+			if section_name not in sections:
+				sections[section_name] = frappe.get_doc("WHT Section", section_name)
+
+			rate = _rate_for(wht_rate, filer_status)
+			amount = flt(advance_base * rate / 100.0, 2)
+			doc.pk_advance_wht_computed_rate = rate
+			doc.pk_advance_wht_amount = amount
+
+			summary[section_name] = summary.get(section_name, 0) + amount
 
 	for section_name, total in summary.items():
 		if not total:

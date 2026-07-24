@@ -25,6 +25,7 @@
   "voucher_no",
   "against_voucher_type",
   "against_voucher",
+  "is_advance",
   "cpr_reference",
   "match_reference",
   "is_reversal",
@@ -148,6 +149,12 @@
    "fieldtype": "Dynamic Link",
    "label": "Against Voucher",
    "options": "against_voucher_type"
+  },
+  {
+   "description": "Withheld on an advance payment with no invoice at the time — against_voucher is intentionally blank",
+   "fieldname": "is_advance",
+   "fieldtype": "Check",
+   "label": "Is Advance (No Invoice At Time Of Payment)"
   },
   {
    "fieldname": "cpr_reference",
