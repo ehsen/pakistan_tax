@@ -1,23 +1,26 @@
 # Copyright (c) 2026, SpotLedger
 """Per-company tax account structure (plan §3.2/§3.3).
 
-Distinct accounts per component because the item tax map is keyed by account:
-a compound rate (18% + Rs.60/kg) needs its percentage and per-unit parts on
-different accounts to be independently overridable per item.
-"""
+One account per direction (Input / Output) regardless of how the rate was
+computed — percentage, fixed per-unit, or compound (both at once). The GL
+doesn't need to know which; that's tracked on the invoice line via
+item_tax_template + the rate fields. Percentage components still post via
+the native engine's item_tax_rate override; fixed/per-unit components post
+via a staged Actual amount (transactions/fixed_component.py) so both can
+land on the very same account without the item-tax-map collision a second
+Item Tax Template row on that account would cause (Item Tax Template
+rejects two rows on one account outright)."""
 
 import frappe
 from frappe import _
 
 OUTPUT_ACCOUNTS = [
 	("account_sales_tax", "Sales Tax Payable"),
-	("account_sales_tax_fixed", "Sales Tax Payable - Fixed"),
 	("account_further_tax", "Further Sales Tax Payable"),
 	("account_advance_tax_236g", "Advance Tax 236G Payable"),
 ]
 INPUT_ACCOUNTS = [
 	("account_input_sales_tax", "Input Sales Tax"),
-	("account_input_sales_tax_fixed", "Input Sales Tax - Fixed"),
 ]
 
 

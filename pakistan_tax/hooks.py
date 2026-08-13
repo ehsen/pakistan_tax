@@ -139,7 +139,10 @@ after_migrate = "pakistan_tax.setup.install.after_migrate"
 
 doc_events = {
 	"Sales Invoice": {
-		"before_validate": "pakistan_tax.transactions.resolution.resolve_templates",
+		"before_validate": [
+			"pakistan_tax.transactions.resolution.resolve_templates",
+			"pakistan_tax.transactions.fixed_component.apply_fixed_components",
+		],
 		"validate": "pakistan_tax.transactions.line_taxes.update_line_tax_fields",
 		"before_submit": [
 			"pakistan_tax.transactions.submit.validate_and_snapshot",
@@ -152,7 +155,10 @@ doc_events = {
 		"on_cancel": "pakistan_tax.tax_ledger.posting.on_voucher_cancel",
 	},
 	"Purchase Invoice": {
-		"before_validate": "pakistan_tax.transactions.resolution.resolve_templates",
+		"before_validate": [
+			"pakistan_tax.transactions.resolution.resolve_templates",
+			"pakistan_tax.transactions.fixed_component.apply_fixed_components",
+		],
 		"validate": [
 			"pakistan_tax.transactions.line_taxes.update_line_tax_fields",
 			"pakistan_tax.transactions.supplier_tax_reconciliation.reconcile_supplier_tax",

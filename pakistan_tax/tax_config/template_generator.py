@@ -14,7 +14,7 @@ configuration (plan §3.2, §3.3, §3.5).
 
 import frappe
 from frappe import _
-from frappe.utils import getdate
+from frappe.utils import flt, getdate
 
 from pakistan_tax.tax_config.accounts import ensure_tax_accounts
 
@@ -27,22 +27,24 @@ def _template_title(tt_id, rate_id, rate_desc):
 
 
 def _rate_rows(rate, settings):
-	"""Template rows for a rate — BOTH output and input accounts, so one
-	template serves sales and purchase documents (the engine only matches
-	accounts that appear in the document's header rows)."""
-	rows = []
-	if rate.rate_type in ("Percentage", "Compound", "Zero", "Exempt"):
-		for account in (settings.account_sales_tax, settings.account_input_sales_tax):
-			rows.append({"tax_type": account,
-				"tax_rate": rate.percent_component or 0,
-				"pk_tax_category": "Sales Tax"})
-	if rate.rate_type in ("Fixed", "Compound"):
-		for account in (settings.account_sales_tax_fixed,
-				settings.account_input_sales_tax_fixed):
-			rows.append({"tax_type": account,
-				"tax_rate": rate.fixed_component or 0,
-				"pk_tax_category": "Sales Tax Fixed"})
-	return rows
+	"""Template rows on the Input/Output Sales Tax account — every rate_type
+	gets one (rate 0 for a pure Fixed rate, since Item Tax Template.taxes is
+	itself mandatory and this is the only row a pure-Fixed template would
+	otherwise have), so one template serves sales and purchase documents
+	(the engine only matches accounts that appear in the document's header
+	rows).
+
+	The fixed/per-unit component (Fixed or Compound rate_type) is never a
+	row here — it would have to share this same account with the percentage
+	row above, and Item Tax Template rejects two rows on one account
+	outright. It's carried on the template itself as pk_fixed_per_unit_rate
+	(set by the caller) and staged at invoice time
+	(transactions/fixed_component.py) onto that same account instead."""
+	return [
+		{"tax_type": account, "tax_rate": rate.percent_component or 0,
+			"pk_tax_category": "Sales Tax"}
+		for account in (settings.account_sales_tax, settings.account_input_sales_tax)
+	]
 
 
 def generate_item_tax_templates(company):
@@ -76,7 +78,8 @@ def generate_item_tax_templates(company):
 			continue
 
 		taxes = _rate_rows(rate, settings)
-		if not taxes:
+		fixed_per_unit = flt(rate.fixed_component) if rate.rate_type in ("Fixed", "Compound") else 0
+		if not taxes and not fixed_per_unit:
 			continue
 
 		doc = frappe.get_doc({
@@ -86,6 +89,7 @@ def generate_item_tax_templates(company):
 			"pk_fbr_transaction_type": tt_name,
 			"pk_fbr_rate": rate_name,
 			"pk_is_fbr_generated": 1,
+			"pk_fixed_per_unit_rate": fixed_per_unit,
 			"taxes": taxes,
 		})
 		doc.insert(ignore_permissions=True)
@@ -144,22 +148,21 @@ HEADER_TEMPLATES = {
 def ensure_header_templates(company):
 	"""Two sales header templates (Registered / Unregistered) + one purchase.
 
-	ST and ST-Fixed rows carry rate 0 — real rates always come from the item's
-	template via the engine's per-item override. Further Tax carries the
-	statutory rate and only exists on the Unregistered template."""
+	ST carries rate 0 — real rates always come from the item's template via
+	the engine's per-item override. No Sales Tax (Fixed/Qty) row here: the
+	fixed/per-unit component isn't a static header row at all, it's staged
+	dynamically per invoice (transactions/fixed_component.py) straight onto
+	the same ST account above, only when an item on the invoice actually has
+	one. Further Tax carries the statutory rate and only exists on the
+	Unregistered template."""
 	settings = ensure_tax_accounts(company)
 	created = []
 
 	def build_rows(is_sales, include_ft):
 		st = settings.account_sales_tax if is_sales else settings.account_input_sales_tax
-		st_fixed = (settings.account_sales_tax_fixed if is_sales
-			else settings.account_input_sales_tax_fixed)
 		rows = [
 			{"charge_type": "On Net Total", "account_head": st, "rate": 0,
 				"description": "Sales Tax", "pk_tax_category": "Sales Tax"},
-			{"charge_type": "On Item Quantity", "account_head": st_fixed, "rate": 0,
-				"description": "Sales Tax (Fixed / Qty)",
-				"pk_tax_category": "Sales Tax Fixed"},
 		]
 		if include_ft:
 			rows.append({"charge_type": "On Net Total",
@@ -222,18 +225,36 @@ def ensure_tax_categories_and_rules(company):
 
 def repair_generated_templates(company):
 	"""Dev-phase schema fix: ensure every generated template carries both
-	output and input account rows (older generations were output-only)."""
+	output and input account rows (older generations were output-only), and
+	migrate the old per-account "Sales Tax Fixed" rows to
+	pk_fixed_per_unit_rate — the fixed/per-unit component now stages onto
+	the plain Input/Output Sales Tax account at invoice time instead of
+	living on its own dedicated account/row."""
 	settings = ensure_tax_accounts(company)
 	fixed = 0
 	for name in frappe.get_all("Item Tax Template",
 			filters={"company": company, "pk_is_fbr_generated": 1}, pluck="name"):
 		doc = frappe.get_doc("Item Tax Template", name)
 		rate = frappe.get_doc("FBR Rate", doc.pk_fbr_rate)
+		changed = False
+
+		old_fixed_rows = [row for row in doc.taxes if row.get("pk_tax_category") == "Sales Tax Fixed"]
+		if old_fixed_rows:
+			doc.taxes = [row for row in doc.taxes if row not in old_fixed_rows]
+			changed = True
+
+		if rate.rate_type in ("Fixed", "Compound") and not doc.pk_fixed_per_unit_rate:
+			doc.pk_fixed_per_unit_rate = flt(rate.fixed_component)
+			changed = True
+
 		have = {row.tax_type for row in doc.taxes}
 		missing = [r for r in _rate_rows(rate, settings) if r["tax_type"] not in have]
 		if missing:
 			for row in missing:
 				doc.append("taxes", row)
+			changed = True
+
+		if changed:
 			doc.flags.ignore_permissions = True
 			doc.save()
 			fixed += 1

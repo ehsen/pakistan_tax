@@ -24,12 +24,10 @@
   "seller_address",
   "section_accounts",
   "account_sales_tax",
-  "account_sales_tax_fixed",
   "account_further_tax",
   "column_break_acc",
   "account_advance_tax_236g",
   "account_input_sales_tax",
-  "account_input_sales_tax_fixed",
   "section_provinces",
   "provinces"
  ],
@@ -137,12 +135,6 @@
    "options": "Account"
   },
   {
-   "fieldname": "account_sales_tax_fixed",
-   "fieldtype": "Link",
-   "label": "Output Sales Tax (Fixed/Qty) Account",
-   "options": "Account"
-  },
-  {
    "fieldname": "account_further_tax",
    "fieldtype": "Link",
    "label": "Further Sales Tax Account",
@@ -162,12 +154,6 @@
    "fieldname": "account_input_sales_tax",
    "fieldtype": "Link",
    "label": "Input Sales Tax Account",
-   "options": "Account"
-  },
-  {
-   "fieldname": "account_input_sales_tax_fixed",
-   "fieldtype": "Link",
-   "label": "Input Sales Tax (Fixed/Qty) Account",
    "options": "Account"
   },
   {

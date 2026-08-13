@@ -74,6 +74,18 @@ CUSTOM_FIELDS = {
 			"insert_after": "pk_fbr_rate_description",
 			"module": MODULE,
 		},
+		{
+			"fieldname": "pk_fixed_per_unit_rate",
+			"fieldtype": "Currency",
+			"label": "Fixed Per-Unit Rate",
+			"description": "Rs./unit component of this rate (3rd Schedule "
+				"per-unit value, or the fixed part of a Fixed/Compound SRO "
+				"rate) — staged onto the Input/Output Sales Tax account at "
+				"invoice time (transactions/fixed_component.py), never a "
+				"second template row on that account",
+			"insert_after": "pk_is_fbr_generated",
+			"module": MODULE,
+		},
 	],
 	"Item Tax Template Detail": [
 		{
