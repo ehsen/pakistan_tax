@@ -149,7 +149,10 @@ doc_events = {
 	},
 	"Purchase Invoice": {
 		"before_validate": "pakistan_tax.transactions.resolution.resolve_templates",
-		"validate": "pakistan_tax.transactions.line_taxes.update_line_tax_fields",
+		"validate": [
+			"pakistan_tax.transactions.line_taxes.update_line_tax_fields",
+			"pakistan_tax.transactions.supplier_tax_reconciliation.reconcile_supplier_tax",
+		],
 		"before_submit": "pakistan_tax.transactions.submit.validate_and_snapshot",
 		"on_submit": [
 			"pakistan_tax.tax_ledger.posting.on_invoice_submit",

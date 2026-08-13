@@ -11,7 +11,8 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 MIN_ERPNEXT_VERSION = (16, 0, 0)
 MODULE = "Pakistan Tax Compliance"
 
-TAX_CATEGORY_OPTIONS = "\nSales Tax\nSales Tax Fixed\nFurther Sales Tax\nAdvance Tax 236G\nWHT"
+TAX_CATEGORY_OPTIONS = ("\nSales Tax\nSales Tax Fixed\nFurther Sales Tax\nAdvance Tax 236G\nWHT"
+	"\nSales Tax Rounding Adjustment\nAdvance Tax 236G Rounding Adjustment")
 
 CUSTOM_FIELDS = {
 	"UOM": [
@@ -155,9 +156,11 @@ def _line_tax_fields():
 		{"fieldname": "pk_further_tax_amount", "fieldtype": "Currency",
 			"label": "Further Tax Amount", "options": "currency",
 			"insert_after": "pk_tax_col_break"},
+		{"fieldname": "pk_advance_tax_rate", "fieldtype": "Float",
+			"label": "Advance Tax Rate (%)", "insert_after": "pk_further_tax_amount"},
 		{"fieldname": "pk_advance_tax_amount", "fieldtype": "Currency",
 			"label": "Advance Tax Amount", "options": "currency",
-			"insert_after": "pk_further_tax_amount"},
+			"insert_after": "pk_advance_tax_rate"},
 		{"fieldname": "pk_total_incl_tax", "fieldtype": "Currency",
 			"label": "Total Incl. Tax", "options": "currency",
 			"insert_after": "pk_advance_tax_amount", "columns": 1},
@@ -167,6 +170,36 @@ def _line_tax_fields():
 		if f["fieldtype"] not in ("Section Break", "Column Break"):
 			f["read_only"] = 1
 			f["no_copy"] = 1
+	return fields
+
+
+def _supplier_tax_fields():
+	"""Supplier Sales Tax Invoice reconciliation inputs (Purchase Invoice Item
+	only) — what the supplier's own tax invoice states per line, entered by
+	hand or by the extraction flow. Compared against the engine's pk_st_amount
+	/ pk_advance_tax_amount in pakistan_tax.transactions.supplier_tax_reconciliation.
+	Rate must match exactly (no tolerance); amount diffs at a matching rate are
+	pure rounding and get corrected into the invoice total."""
+	fields = [
+		{"fieldname": "pk_supplier_tax_section", "fieldtype": "Section Break",
+			"label": "Supplier Sales Tax Invoice", "insert_after": "pk_total_incl_tax",
+			"collapsible": 1},
+		{"fieldname": "pk_supplier_st_rate", "fieldtype": "Float",
+			"label": "Supplier ST Rate (%)", "insert_after": "pk_supplier_tax_section"},
+		{"fieldname": "pk_supplier_st_amount", "fieldtype": "Currency",
+			"label": "Supplier ST Amount", "options": "currency",
+			"insert_after": "pk_supplier_st_rate"},
+		{"fieldname": "pk_supplier_tax_col_break", "fieldtype": "Column Break",
+			"insert_after": "pk_supplier_st_amount"},
+		{"fieldname": "pk_supplier_advance_tax_rate", "fieldtype": "Float",
+			"label": "Supplier Advance Tax Rate (%)",
+			"insert_after": "pk_supplier_tax_col_break"},
+		{"fieldname": "pk_supplier_advance_tax_amount", "fieldtype": "Currency",
+			"label": "Supplier Advance Tax Amount", "options": "currency",
+			"insert_after": "pk_supplier_advance_tax_rate"},
+	]
+	for f in fields:
+		f["module"] = MODULE
 	return fields
 
 
@@ -271,7 +304,8 @@ def _invoice_header_fields(is_sales):
 
 
 CUSTOM_FIELDS["Sales Invoice Item"] = _line_tax_fields() + _row_fbr_fields()
-CUSTOM_FIELDS["Purchase Invoice Item"] = _line_tax_fields() + _row_fbr_fields()
+CUSTOM_FIELDS["Purchase Invoice Item"] = (
+	_line_tax_fields() + _row_fbr_fields() + _supplier_tax_fields())
 CUSTOM_FIELDS["Sales Invoice"] = _invoice_header_fields(True)
 CUSTOM_FIELDS["Purchase Invoice"] = _invoice_header_fields(False)
 CUSTOM_FIELDS["Customer"] = _party_status_fields("tax_id")
