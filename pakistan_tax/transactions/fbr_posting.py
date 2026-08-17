@@ -9,7 +9,7 @@ import frappe
 from frappe import _
 from frappe.utils import now_datetime
 
-from pakistan_tax.fbr.client import DI_DATA, FBRClient
+from pakistan_tax.fbr.client import FBRClient
 from pakistan_tax.transactions.payload import build_payload
 
 
@@ -46,7 +46,7 @@ def _call(invoice_name, endpoint_leaf):
 	sandbox = client.settings.environment == "Sandbox"
 	payload = build_payload(si, for_sandbox=sandbox)
 	suffix = "_sb" if sandbox else ""
-	url = f"{DI_DATA}/{endpoint_leaf}{suffix}"
+	url = f"{client.settings.di_data_url or 'https://gw.fbr.gov.pk/di_data/v1/di'}/{endpoint_leaf}{suffix}"
 	resp = client.post(url, payload=payload,
 		reference_doctype="Sales Invoice", reference_name=invoice_name)
 	return si, resp, payload

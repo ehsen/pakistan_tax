@@ -13,6 +13,11 @@
   "section_tokens",
   "sandbox_token",
   "production_token",
+  "section_endpoints",
+  "pdi_v1_url",
+  "pdi_v2_url",
+  "dist_v1_url",
+  "di_data_url",
   "section_profile",
   "business_activity",
   "column_break_b",
@@ -76,6 +81,35 @@
    "fieldname": "production_token",
    "fieldtype": "Password",
    "label": "Production Token"
+  },
+  {
+   "fieldname": "section_endpoints",
+   "fieldtype": "Section Break",
+   "label": "FBR Endpoints"
+  },
+  {
+   "fieldname": "pdi_v1_url",
+   "fieldtype": "Data",
+   "label": "PDI v1 URL",
+   "default": "https://gw.fbr.gov.pk/pdi/v1"
+  },
+  {
+   "fieldname": "pdi_v2_url",
+   "fieldtype": "Data",
+   "label": "PDI v2 URL",
+   "default": "https://gw.fbr.gov.pk/pdi/v2"
+  },
+  {
+   "fieldname": "dist_v1_url",
+   "fieldtype": "Data",
+   "label": "DIST v1 URL",
+   "default": "https://gw.fbr.gov.pk/dist/v1"
+  },
+  {
+   "fieldname": "di_data_url",
+   "fieldtype": "Data",
+   "label": "DI Data URL",
+   "default": "https://gw.fbr.gov.pk/di_data/v1/di"
   },
   {
    "fieldname": "section_profile",
