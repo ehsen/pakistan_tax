@@ -11,10 +11,12 @@ document-currency values on the rows to match rate/amount columns.
 import frappe
 from frappe.utils import flt
 
-# pk_tax_category -> which row fields it feeds
-ST_CATEGORIES = ("Sales Tax", "Sales Tax Fixed")
+# pk_tax_category -> which row fields it feeds. "Fixed"/"Rounding Adjustment"
+# variants are per-unit (On Item Quantity) rows that must fold into the
+# amount but never override the displayed percentage rate.
+ST_CATEGORIES = ("Sales Tax", "Sales Tax Fixed", "Sales Tax Rounding Adjustment")
 FT_CATEGORY = "Further Sales Tax"
-AT_CATEGORY = "Advance Tax 236G"
+AT_CATEGORIES = ("Advance Tax 236G", "Advance Tax 236G Rounding Adjustment")
 
 
 def _iter_item_wise_details(doc):
@@ -46,7 +48,7 @@ def update_line_tax_fields(doc, method=None):
 	for item_row, category, rate, amount in _iter_item_wise_details(doc):
 		agg = totals.setdefault(item_row, {
 			"st_rate": 0, "st_amount": 0, "ft_rate": 0, "ft_amount": 0,
-			"at_amount": 0})
+			"at_rate": 0, "at_amount": 0})
 		if category in ST_CATEGORIES:
 			agg["st_amount"] += amount
 			if category == "Sales Tax":
@@ -54,8 +56,10 @@ def update_line_tax_fields(doc, method=None):
 		elif category == FT_CATEGORY:
 			agg["ft_amount"] += amount
 			agg["ft_rate"] = rate
-		elif category == AT_CATEGORY:
+		elif category in AT_CATEGORIES:
 			agg["at_amount"] += amount
+			if category == "Advance Tax 236G":
+				agg["at_rate"] = rate
 
 	for item in doc.get("items", []):
 		agg = totals.get(item.name) or {}
@@ -64,6 +68,7 @@ def update_line_tax_fields(doc, method=None):
 		item.pk_st_amount = flt(agg.get("st_amount", 0), precision)
 		item.pk_further_tax_rate = flt(agg.get("ft_rate", 0))
 		item.pk_further_tax_amount = flt(agg.get("ft_amount", 0), precision)
+		item.pk_advance_tax_rate = flt(agg.get("at_rate", 0))
 		item.pk_advance_tax_amount = flt(agg.get("at_amount", 0), precision)
 		item.pk_total_incl_tax = flt(
 			flt(item.net_amount) + item.pk_st_amount + item.pk_further_tax_amount,

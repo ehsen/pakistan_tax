@@ -1,0 +1,129 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-07-23 09:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section",
+  "title",
+  "condition",
+  "column_break_a",
+  "nature_code",
+  "reference_note",
+  "section_rates",
+  "filer_rate",
+  "non_filer_rate",
+  "not_a_flat_rate",
+  "column_break_b",
+  "valid_from",
+  "valid_upto"
+ ],
+ "fields": [
+  {
+   "fieldname": "section",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "WHT Section",
+   "options": "WHT Section",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Small Text",
+   "label": "Title",
+   "read_only": 1
+  },
+  {
+   "description": "When this specific rate applies — e.g. \"Goods — Company\", \"IT-enabled Services\", \"Non-Company\". This is the detail a user picks by, so make it specific.",
+   "fieldname": "condition",
+   "fieldtype": "Data",
+   "length": 300,
+   "in_list_view": 1,
+   "label": "Applies When",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "FBR Tax Payment Nature Code (challan code), where applicable",
+   "fieldname": "nature_code",
+   "fieldtype": "Data",
+   "label": "Nature Code"
+  },
+  {
+   "fieldname": "reference_note",
+   "fieldtype": "Small Text",
+   "label": "Reference Note",
+   "description": "Verbatim source description, kept for audit"
+  },
+  {
+   "fieldname": "section_rates",
+   "fieldtype": "Section Break",
+   "label": "Rates"
+  },
+  {
+   "fieldname": "filer_rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Filer Rate (%)"
+  },
+  {
+   "fieldname": "non_filer_rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Non-Filer Rate (%)"
+  },
+  {
+   "default": "0",
+   "description": "Set when the source does not give a flat percentage (slab/schedule/fixed-amount sections such as vehicle registration fees). Rates above are 0 and must be configured manually before use.",
+   "fieldname": "not_a_flat_rate",
+   "fieldtype": "Check",
+   "label": "Not a Flat Rate — Configure Manually"
+  },
+  {
+   "fieldname": "column_break_b",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "valid_from",
+   "fieldtype": "Date",
+   "label": "Valid From"
+  },
+  {
+   "fieldname": "valid_upto",
+   "fieldtype": "Date",
+   "label": "Valid Upto"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-23 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "WHT Rate",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "title",
+ "track_changes": 1
+}

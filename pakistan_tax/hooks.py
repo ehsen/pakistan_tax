@@ -26,7 +26,11 @@ required_apps = ["erpnext"]
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/pakistan_tax/css/pakistan_tax.css"
-# app_include_js = "/assets/pakistan_tax/js/pakistan_tax.js"
+app_include_js = "/assets/pakistan_tax/js/tax_row_direction.js"
+
+# Boot
+# ----
+extend_bootinfo = "pakistan_tax.boot.boot_session"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/pakistan_tax/css/pakistan_tax.css"
@@ -135,7 +139,10 @@ after_migrate = "pakistan_tax.setup.install.after_migrate"
 
 doc_events = {
 	"Sales Invoice": {
-		"before_validate": "pakistan_tax.transactions.resolution.resolve_templates",
+		"before_validate": [
+			"pakistan_tax.transactions.resolution.resolve_templates",
+			"pakistan_tax.transactions.fixed_component.apply_fixed_components",
+		],
 		"validate": "pakistan_tax.transactions.line_taxes.update_line_tax_fields",
 		"before_submit": [
 			"pakistan_tax.transactions.submit.validate_and_snapshot",
@@ -148,8 +155,14 @@ doc_events = {
 		"on_cancel": "pakistan_tax.tax_ledger.posting.on_voucher_cancel",
 	},
 	"Purchase Invoice": {
-		"before_validate": "pakistan_tax.transactions.resolution.resolve_templates",
-		"validate": "pakistan_tax.transactions.line_taxes.update_line_tax_fields",
+		"before_validate": [
+			"pakistan_tax.transactions.resolution.resolve_templates",
+			"pakistan_tax.transactions.fixed_component.apply_fixed_components",
+		],
+		"validate": [
+			"pakistan_tax.transactions.line_taxes.update_line_tax_fields",
+			"pakistan_tax.transactions.supplier_tax_reconciliation.reconcile_supplier_tax",
+		],
 		"before_submit": "pakistan_tax.transactions.submit.validate_and_snapshot",
 		"on_submit": [
 			"pakistan_tax.tax_ledger.posting.on_invoice_submit",
