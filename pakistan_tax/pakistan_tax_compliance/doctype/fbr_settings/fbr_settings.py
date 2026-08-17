@@ -16,6 +16,12 @@ class MockSettings:
 		self.token = token
 		self.provinces = []
 		
+		# Fallback endpoints for when syncing before document is saved
+		self.pdi_v1_url = None
+		self.pdi_v2_url = None
+		self.dist_v1_url = None
+		self.di_data_url = None
+		
 	def get_password(self, field, raise_exception=False):
 		return self.token
 
