@@ -13,7 +13,6 @@ import frappe
 import requests
 from frappe import _
 
-
 def parse_lenient_json(text):
 	"""FBR responses are sometimes malformed JSON (trailing commas, tabs).
 	Try strict parsing first, then strip trailing commas and retry."""
@@ -28,13 +27,9 @@ def parse_lenient_json(text):
 		except ValueError:
 			return None
 
-PDI_V1 = "https://gw.fbr.gov.pk/pdi/v1"
-PDI_V2 = "https://gw.fbr.gov.pk/pdi/v2"
-DIST_V1 = "https://gw.fbr.gov.pk/dist/v1"
 DI_DATA = "https://gw.fbr.gov.pk/di_data/v1/di"
 
 REQUEST_TIMEOUT = 30
-
 
 class FBRResponse:
 	def __init__(self, status_code, data, text=""):
@@ -46,7 +41,6 @@ class FBRResponse:
 	def ok(self):
 		return self.status_code == 200 and self.data is not None
 
-
 def get_settings(company=None):
 	"""Return the enabled FBR Settings doc for a company (or the first enabled one)."""
 	filters = {"is_enabled": 1}
@@ -57,7 +51,6 @@ def get_settings(company=None):
 		frappe.throw(_("No enabled FBR Settings found{0}").format(
 			_(" for company {0}").format(company) if company else ""))
 	return frappe.get_doc("FBR Settings", name)
-
 
 class FBRClient:
 	def __init__(self, company=None, settings=None):
@@ -134,40 +127,40 @@ class FBRClient:
 	# ---------------- Reference API wrappers (doc section 5) ----------------
 
 	def provinces(self):
-		return self.get(f"{PDI_V1}/provinces")
+		return self.get(f"{self.settings.pdi_v1_url or "https://gw.fbr.gov.pk/pdi/v1"}/provinces")
 
 	def doc_type_codes(self):
-		return self.get(f"{PDI_V1}/doctypecode")
+		return self.get(f"{self.settings.pdi_v1_url or "https://gw.fbr.gov.pk/pdi/v1"}/doctypecode")
 
 	def transaction_types(self):
-		return self.get(f"{PDI_V1}/transtypecode")
+		return self.get(f"{self.settings.pdi_v1_url or "https://gw.fbr.gov.pk/pdi/v1"}/transtypecode")
 
 	def uoms(self):
-		return self.get(f"{PDI_V1}/uom")
+		return self.get(f"{self.settings.pdi_v1_url or "https://gw.fbr.gov.pk/pdi/v1"}/uom")
 
 	def sale_type_to_rate(self, date_dd_mon_yyyy, trans_type_id, province_code):
-		return self.get(f"{PDI_V2}/SaleTypeToRate", params={
+		return self.get(f"{self.settings.pdi_v2_url or "https://gw.fbr.gov.pk/pdi/v2"}/SaleTypeToRate", params={
 			"date": date_dd_mon_yyyy,
 			"transTypeId": trans_type_id,
 			"originationSupplier": province_code,
 		})
 
 	def sro_schedule(self, rate_id, date_dd_mon_yyyy, province_code):
-		return self.get(f"{PDI_V1}/SroSchedule", params={
+		return self.get(f"{self.settings.pdi_v1_url or "https://gw.fbr.gov.pk/pdi/v1"}/SroSchedule", params={
 			"rate_id": rate_id,
 			"date": date_dd_mon_yyyy,
 			"origination_supplier_csv": province_code,
 		})
 
 	def sro_items(self, date_iso, sro_id):
-		return self.get(f"{PDI_V2}/SROItem", params={"date": date_iso, "sro_id": sro_id})
+		return self.get(f"{self.settings.pdi_v2_url or "https://gw.fbr.gov.pk/pdi/v2"}/SROItem", params={"date": date_iso, "sro_id": sro_id})
 
 	def hs_uom(self, hs_code, annexure_id=3):
-		return self.get(f"{PDI_V2}/HS_UOM", params={
+		return self.get(f"{self.settings.pdi_v2_url or "https://gw.fbr.gov.pk/pdi/v2"}/HS_UOM", params={
 			"hs_code": hs_code, "annexure_id": annexure_id})
 
 	def statl(self, regno, date_iso):
-		return self.post(f"{DIST_V1}/statl", payload={"regno": regno, "date": date_iso})
+		return self.post(f"{self.settings.dist_v1_url or "https://gw.fbr.gov.pk/dist/v1"}/statl", payload={"regno": regno, "date": date_iso})
 
 	def get_reg_type(self, regno):
-		return self.post(f"{DIST_V1}/Get_Reg_Type", payload={"Registration_No": regno})
+		return self.post(f"{self.settings.dist_v1_url or "https://gw.fbr.gov.pk/dist/v1"}/Get_Reg_Type", payload={"Registration_No": regno})
