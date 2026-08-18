@@ -448,8 +448,15 @@ def sync_all():
 
 
 def daily_sync():
-	"""Scheduler entry point — no-op unless an enabled FBR Settings exists."""
-	if not frappe.db.get_value("FBR Settings", {"is_enabled": 1}):
+	"""Scheduler entry point — no-op unless an enabled FBR Settings exists.
+
+	Reference data (provinces/transaction types/UOMs/rates/SRO chain) is
+	global, so it's synced once. Item Tax Template generation is per-company
+	(pk_is_fbr_generated templates carry a company), so it runs once per
+	company with an enabled FBR Settings, isolated so one company's failure
+	doesn't block another's."""
+	companies = frappe.get_all("FBR Settings", filters={"is_enabled": 1}, pluck="company")
+	if not companies:
 		return
 	try:
 		client = FBRClient()
@@ -460,3 +467,14 @@ def daily_sync():
 		sync_sro_chain(client)
 	except Exception:
 		frappe.log_error(title="FBR daily sync failed", message=frappe.get_traceback())
+
+	from pakistan_tax.tax_config.template_generator import (
+		generate_item_tax_templates, update_transaction_type_defaults)
+
+	for company in companies:
+		try:
+			generate_item_tax_templates(company)
+			update_transaction_type_defaults(company)
+		except Exception:
+			frappe.log_error(title="FBR Item Tax Template generation failed",
+				message=f"company={company}\n{frappe.get_traceback()}")
