@@ -9,6 +9,7 @@ document-currency values on the rows to match rate/amount columns.
 """
 
 import frappe
+from frappe import _
 from frappe.utils import flt
 
 # pk_tax_category -> which row fields it feeds. "Fixed"/"Rounding Adjustment"
@@ -41,9 +42,31 @@ def _iter_item_wise_details(doc):
 		yield row.item_row, category, flt(row.rate), flt(row.amount) / conversion
 
 
+def _resolve_and_enforce_tax_authority(doc):
+	"""One invoice, one tax authority (plan §3.10) — resolved from the
+	items' Item Tax Templates, never inferred/split. Both this app's actual
+	integration payload builders (FBR Digital Invoicing, PRA POS) serialize
+	every item on the document into a single outbound call, so a document
+	mixing authorities can never be filed correctly — reject it here, at
+	validate, rather than let it reach submit or a downstream report."""
+	authorities = {row.pk_tax_authority for row in doc.get("items", [])
+		if row.get("pk_tax_authority")}
+	if len(authorities) > 1:
+		frappe.throw(_(
+			"This invoice mixes items taxed by different authorities ({0}). "
+			"Each authority's Digital Invoicing/POS integration expects one "
+			"complete, self-contained invoice — split these into separate "
+			"invoices, one per authority, before submitting."
+		).format(", ".join(sorted(authorities))))
+	if authorities:
+		doc.pk_tax_authority = authorities.pop()
+
+
 def update_line_tax_fields(doc, method=None):
 	"""doc_events.validate on Sales Invoice / Purchase Invoice — runs after the
 	controller's own validate (which includes calculate_taxes_and_totals)."""
+	_resolve_and_enforce_tax_authority(doc)
+
 	totals = {}  # item_row_name -> dict
 	for item_row, category, rate, amount in _iter_item_wise_details(doc):
 		agg = totals.setdefault(item_row, {

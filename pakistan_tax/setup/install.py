@@ -86,6 +86,17 @@ CUSTOM_FIELDS = {
 			"insert_after": "pk_is_fbr_generated",
 			"module": MODULE,
 		},
+		{
+			"fieldname": "pk_tax_authority",
+			"fieldtype": "Link",
+			"options": "Tax Authority",
+			"label": "Tax Authority",
+			"default": "FBR",
+			"description": "Which authority this template's rules belong to. "
+				"One template = one regime = one authority.",
+			"insert_after": "pk_fixed_per_unit_rate",
+			"module": MODULE,
+		},
 	],
 	"Item Tax Template Detail": [
 		{
@@ -218,9 +229,16 @@ def _supplier_tax_fields():
 def _row_fbr_fields():
 	"""Row-level FBR inputs + frozen snapshots (§3.5/§3.6/§3.9)."""
 	return [
+		{"fieldname": "pk_tax_authority", "fieldtype": "Link", "options": "Tax Authority",
+			"label": "Tax Authority", "insert_after": "item_tax_template",
+			"fetch_from": "item_tax_template.pk_tax_authority", "fetch_if_empty": 1,
+			"read_only": 1,
+			"description": "Resolved from this row's Item Tax Template. Used to "
+				"enforce one-authority-per-invoice at validate and for "
+				"authority-wise reporting — never edited directly."},
 		{"fieldname": "pk_fbr_transaction_type", "fieldtype": "Link",
 			"options": "FBR Transaction Type", "label": "FBR Transaction Type",
-			"insert_after": "item_tax_template", "fetch_from": "item_code.pk_fbr_transaction_type",
+			"insert_after": "pk_tax_authority", "fetch_from": "item_code.pk_fbr_transaction_type",
 			"fetch_if_empty": 1},
 		{"fieldname": "pk_sro_schedule", "fieldtype": "Link", "options": "FBR SRO",
 			"label": "SRO Schedule", "insert_after": "pk_fbr_transaction_type"},
@@ -276,6 +294,12 @@ def _invoice_header_fields(is_sales):
 			"label": "Tax Party (third-party tax identity)",
 			"description": "Leave empty when the tax document names the commercial party itself",
 			"insert_after": "pk_is_tax_invoice"},
+		{"fieldname": "pk_tax_authority", "fieldtype": "Link", "options": "Tax Authority",
+			"label": "Tax Authority", "read_only": 1, "insert_after": "pk_fbr_col1",
+			"description": "Auto-resolved from this invoice's items at validate. "
+				"An invoice mixing items under different authorities is "
+				"rejected — each authority's Digital Invoicing/POS integration "
+				"expects one complete, self-contained invoice."},
 	]
 	if is_sales:
 		fields += [
@@ -425,6 +449,9 @@ def after_install():
 	from pakistan_tax.wht.seed import _seed
 	_seed()
 
+	from pakistan_tax.tax_config.authority_seed import _seed as _seed_authorities
+	_seed_authorities()
+
 
 def after_migrate():
 	# Idempotent — keeps fields present, and seeds any new reference rows
@@ -433,3 +460,6 @@ def after_migrate():
 
 	from pakistan_tax.wht.seed import _seed
 	_seed()
+
+	from pakistan_tax.tax_config.authority_seed import _seed as _seed_authorities
+	_seed_authorities()

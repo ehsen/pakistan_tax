@@ -15,6 +15,7 @@
   "tax_party",
   "party_ntn",
   "section",
+  "tax_authority",
   "wht_rate",
   "section_amounts",
   "taxable_amount",
@@ -95,6 +96,14 @@
    "fieldtype": "Link",
    "label": "Section",
    "options": "WHT Section"
+  },
+  {
+   "description": "Which authority this tax event belongs to (FBR's own \"Source Authority\" concept) — copied from the source document at posting time, immutable like every other TLE field",
+   "fieldname": "tax_authority",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Tax Authority",
+   "options": "Tax Authority"
   },
   {
    "fieldname": "wht_rate",

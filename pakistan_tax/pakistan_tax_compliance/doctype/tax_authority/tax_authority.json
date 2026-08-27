@@ -1,0 +1,79 @@
+{
+ "actions": [],
+ "autoname": "field:authority_code",
+ "creation": "2026-08-22 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "authority_code",
+  "authority_name",
+  "jurisdiction_type",
+  "province",
+  "is_active"
+ ],
+ "fields": [
+  {
+   "description": "e.g. FBR, SRB, PRA, KPRA, BRA",
+   "fieldname": "authority_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Authority Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "authority_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Authority Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "jurisdiction_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Jurisdiction Type",
+   "options": "Federal\nProvincial",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.jurisdiction_type==\"Provincial\"",
+   "fieldname": "province",
+   "fieldtype": "Link",
+   "label": "Province",
+   "options": "FBR Province"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-22 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Pakistan Tax Compliance",
+ "name": "Tax Authority",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

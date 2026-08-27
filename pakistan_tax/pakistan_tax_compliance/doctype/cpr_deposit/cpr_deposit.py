@@ -19,6 +19,8 @@ class CPRDeposit(Document):
 		}
 		if self.section:
 			filters["section"] = self.section
+		if self.tax_authority:
+			filters["tax_authority"] = self.tax_authority
 
 		self.items = []
 		total = 0
@@ -46,12 +48,16 @@ class CPRDeposit(Document):
 		if not self.items:
 			frappe.throw(_("No withheld entries selected"))
 		for item in self.items:
-			status = frappe.db.get_value("Tax Ledger Entry",
-				item.tax_ledger_entry, "status")
+			status, tax_authority = frappe.db.get_value("Tax Ledger Entry",
+				item.tax_ledger_entry, ["status", "tax_authority"])
 			if status != "Withheld":
 				frappe.throw(_(
 					"Entry {0} is no longer in Withheld status ({1}) — refresh "
 					"the entries").format(item.tax_ledger_entry, status))
+			if self.tax_authority and tax_authority != self.tax_authority:
+				frappe.throw(_(
+					"Entry {0} belongs to {1}, not {2} — refresh the entries"
+				).format(item.tax_ledger_entry, tax_authority, self.tax_authority))
 
 	def on_submit(self):
 		by_account = {}

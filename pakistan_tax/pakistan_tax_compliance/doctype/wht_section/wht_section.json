@@ -8,6 +8,7 @@
   "section_code",
   "section_description",
   "tax_payment_nature",
+  "tax_authority",
   "column_break_a",
   "rate_count",
   "section_accounts",
@@ -36,6 +37,14 @@
    "fieldname": "tax_payment_nature",
    "fieldtype": "Data",
    "label": "Tax Payment Nature"
+  },
+  {
+   "default": "FBR",
+   "description": "Withholding under the Income Tax Ordinance is federal (FBR) in virtually all cases; kept as a real field for correctness and any future provincial withholding-type section.",
+   "fieldname": "tax_authority",
+   "fieldtype": "Link",
+   "label": "Tax Authority",
+   "options": "Tax Authority"
   },
   {
    "fieldname": "column_break_a",

@@ -10,6 +10,7 @@
   "to_date",
   "column_break_a",
   "section",
+  "tax_authority",
   "bank_account",
   "cpr_number",
   "section_items",
@@ -54,6 +55,13 @@
    "fieldtype": "Link",
    "label": "Section",
    "options": "WHT Section"
+  },
+  {
+   "description": "Leave empty to include all authorities",
+   "fieldname": "tax_authority",
+   "fieldtype": "Link",
+   "label": "Tax Authority",
+   "options": "Tax Authority"
   },
   {
    "fieldname": "bank_account",

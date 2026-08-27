@@ -11,6 +11,7 @@ class SalesTaxReturnSettlement(Document):
 	def _tle_sum(self, tax_type, statuses):
 		rows = frappe.get_all("Tax Ledger Entry", filters={
 			"company": self.company,
+			"tax_authority": self.tax_authority,
 			"tax_type": tax_type,
 			"status": ("in", statuses),
 			"posting_date": ("between", [self.period_start, self.period_end]),
@@ -41,8 +42,17 @@ class SalesTaxReturnSettlement(Document):
 			frappe.throw(_("Nothing to settle in this period"))
 
 	def on_submit(self):
-		settings = frappe.get_doc("FBR Settings",
-			frappe.db.get_value("FBR Settings", {"company": self.company}))
+		authority_code = frappe.db.get_value("Tax Authority", self.tax_authority,
+			"authority_code")
+		if authority_code == "FBR":
+			settings = frappe.get_doc("FBR Settings",
+				frappe.db.get_value("FBR Settings", {"company": self.company}))
+		else:
+			frappe.throw(_(
+				"Sales Tax Return Settlement for {0} is not yet configured — "
+				"add the account-resolution branch for this authority when it "
+				"is onboarded (see the FBR branch above for the pattern)."
+			).format(self.tax_authority))
 		accounts = []
 		if flt(self.output_st):
 			accounts.append({"account": settings.account_sales_tax,
@@ -75,7 +85,8 @@ class SalesTaxReturnSettlement(Document):
 				("Further Tax", ["Pending Return"]),
 				("Input ST", ["Claimed", "Matched"])):
 			for name in frappe.get_all("Tax Ledger Entry", filters={
-					"company": self.company, "tax_type": tax_type,
+					"company": self.company, "tax_authority": self.tax_authority,
+					"tax_type": tax_type,
 					"status": ("in", statuses),
 					"posting_date": ("between",
 						[self.period_start, self.period_end])}, pluck="name"):

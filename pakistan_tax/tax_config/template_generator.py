@@ -89,6 +89,7 @@ def generate_item_tax_templates(company):
 			"pk_fbr_transaction_type": tt_name,
 			"pk_fbr_rate": rate_name,
 			"pk_is_fbr_generated": 1,
+			"pk_tax_authority": "FBR",
 			"pk_fixed_per_unit_rate": fixed_per_unit,
 			"taxes": taxes,
 		})

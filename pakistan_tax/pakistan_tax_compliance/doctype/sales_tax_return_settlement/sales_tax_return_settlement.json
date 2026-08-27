@@ -5,6 +5,7 @@
  "engine": "InnoDB",
  "field_order": [
   "company",
+  "tax_authority",
   "posting_date",
   "period_start",
   "period_end",
@@ -25,6 +26,13 @@
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tax_authority",
+   "fieldtype": "Link",
+   "label": "Tax Authority",
+   "options": "Tax Authority",
    "reqd": 1
   },
   {

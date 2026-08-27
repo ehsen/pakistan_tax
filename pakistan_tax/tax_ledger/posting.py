@@ -47,6 +47,7 @@ def on_invoice_submit(doc, method=None):
 		"voucher_no": doc.name,
 		"fbr_invoice_no": (doc.get("pk_fbr_invoice_number") if is_sales
 			else doc.get("pk_supplier_fbr_invoice_no")),
+		"tax_authority": doc.get("pk_tax_authority"),
 	}
 
 	if is_sales:
@@ -91,6 +92,8 @@ def on_payment_submit(doc, method=None):
 		_insert(
 			posting_date=doc.posting_date,
 			section=ref.pk_wht_section,
+			tax_authority=frappe.db.get_value("WHT Section", ref.pk_wht_section,
+				"tax_authority"),
 			wht_rate=ref.get("pk_wht_rate"),
 			against_voucher_type=ref.reference_doctype,
 			against_voucher=ref.reference_name,
@@ -109,6 +112,8 @@ def on_payment_submit(doc, method=None):
 		_insert(
 			posting_date=doc.posting_date,
 			section=wht_rate_doc.section,
+			tax_authority=frappe.db.get_value("WHT Section", wht_rate_doc.section,
+				"tax_authority"),
 			wht_rate=doc.pk_advance_wht_rate,
 			taxable_amount=flt(doc.unallocated_amount),
 			tax_amount=flt(doc.pk_advance_wht_amount),
@@ -123,8 +128,8 @@ def on_voucher_cancel(doc, method=None):
 			filters={"voucher_type": doc.doctype, "voucher_no": doc.name,
 				"is_reversal": 0},
 			fields=["name", "posting_date", "company", "tax_type", "party_type",
-				"party", "tax_party", "party_ntn", "section", "wht_rate",
-				"taxable_amount", "tax_amount", "fbr_invoice_no",
+				"party", "tax_party", "party_ntn", "section", "tax_authority",
+				"wht_rate", "taxable_amount", "tax_amount", "fbr_invoice_no",
 				"against_voucher_type", "against_voucher", "is_advance"]):
 		_insert(
 			posting_date=frappe.utils.nowdate(),
@@ -135,6 +140,7 @@ def on_voucher_cancel(doc, method=None):
 			tax_party=row.tax_party,
 			party_ntn=row.party_ntn,
 			section=row.section,
+			tax_authority=row.tax_authority,
 			wht_rate=row.wht_rate,
 			voucher_type=doc.doctype,
 			voucher_no=doc.name,
