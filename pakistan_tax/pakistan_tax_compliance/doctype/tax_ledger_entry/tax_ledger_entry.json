@@ -21,6 +21,7 @@
   "taxable_amount",
   "tax_amount",
   "fbr_invoice_no",
+  "gd_no",
   "column_break_b",
   "voucher_type",
   "voucher_no",
@@ -131,6 +132,12 @@
    "fieldname": "fbr_invoice_no",
    "fieldtype": "Data",
    "label": "FBR Invoice No"
+  },
+  {
+   "description": "Goods Declaration number — customs' own document reference for import-sourced tax rows (Landed Cost Voucher). Never mixed with fbr_invoice_no: a GD is not an FBR digital-invoicing document.",
+   "fieldname": "gd_no",
+   "fieldtype": "Data",
+   "label": "GD No"
   },
   {
    "fieldname": "column_break_b",

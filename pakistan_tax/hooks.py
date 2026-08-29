@@ -178,6 +178,10 @@ doc_events = {
 	"Item": {
 		"validate": "pakistan_tax.transactions.third_schedule.sync_third_schedule_template",
 	},
+	"Landed Cost Voucher": {
+		"on_submit": "pakistan_tax.tax_ledger.import_posting.on_lcv_submit",
+		"on_cancel": "pakistan_tax.tax_ledger.posting.on_voucher_cancel",
+	},
 }
 
 # Scheduled Tasks

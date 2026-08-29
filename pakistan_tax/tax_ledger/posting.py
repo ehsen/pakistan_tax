@@ -129,7 +129,7 @@ def on_voucher_cancel(doc, method=None):
 				"is_reversal": 0},
 			fields=["name", "posting_date", "company", "tax_type", "party_type",
 				"party", "tax_party", "party_ntn", "section", "tax_authority",
-				"wht_rate", "taxable_amount", "tax_amount", "fbr_invoice_no",
+				"wht_rate", "taxable_amount", "tax_amount", "fbr_invoice_no", "gd_no",
 				"against_voucher_type", "against_voucher", "is_advance"]):
 		_insert(
 			posting_date=frappe.utils.nowdate(),
@@ -150,6 +150,7 @@ def on_voucher_cancel(doc, method=None):
 			taxable_amount=-flt(row.taxable_amount),
 			tax_amount=-flt(row.tax_amount),
 			fbr_invoice_no=row.fbr_invoice_no,
+			gd_no=row.gd_no,
 			status="Reversed",
 			is_reversal=1,
 			reversal_of=row.name,

@@ -2,6 +2,10 @@
  "source": "FBR Tax Payment Nature Codes (wht rates.xlsx), parsed 2026-07-23. Rates as published in source; sections without a percentage figure in source text are flagged not_a_flat_rate for manual configuration. Exemption-code cross-reference intentionally omitted (source data corrupted).",
  "sections": [
   {
+   "section_code": "148",
+   "section_description": "Advance Tax on Imports (not in the parsed source spreadsheet — added manually for the Landed Cost Voucher import-tax integration)"
+  },
+  {
    "section_code": "149",
    "section_description": "Salary of Federal Government Employees"
   },
