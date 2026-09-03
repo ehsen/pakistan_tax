@@ -19,8 +19,8 @@ def _patch_process_item_selection():
 	original = TransactionBase.process_item_selection
 
 	@frappe.whitelist()
-	def patched(self, item_idx):
-		original(self, item_idx)
+	def patched(self, item_idx, reset_item_details=False):
+		original(self, item_idx, reset_item_details=reset_item_details)
 		if self.get("pk_is_tax_invoice"):
 			from pakistan_tax.transactions.resolution import _reconcile_ad_hoc_tax_rows
 			_reconcile_ad_hoc_tax_rows(self)
