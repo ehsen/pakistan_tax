@@ -8,6 +8,7 @@ appearing. Nothing is edited or deleted — history accumulates.
 """
 
 import json
+import os
 import re
 import time
 
@@ -17,6 +18,8 @@ from frappe.utils import getdate, now_datetime, nowdate
 from pakistan_tax.fbr.client import FBRClient
 
 RATE_LIMIT_SLEEP = 0.4  # FBR allows max 3 calls/second
+
+HS_CODES_DATA_FILE = os.path.join(os.path.dirname(__file__), "data", "hs_codes.json")
 
 
 def _fbr_date(date=None):
@@ -411,12 +414,16 @@ def sync_hs_codes(rows=None, file_path=None, batch_size=200):
 	dicts; hs_code/description also accepted). Idempotent — safe to re-run
 	whenever FBR publishes an updated list.
 
+	Defaults to the bundled fbr/data/hs_codes.json snapshot (called from
+	after_install/after_migrate so every site gets it without a manual step);
+	pass file_path/rows to load a fresher export instead.
+
 	Existing rows get their description updated only when it actually
 	changed, so re-running this doesn't touch modified/unmodified timestamps
 	for the other ~7000 unaffected rows.
 	"""
 	if rows is None:
-		with open(file_path) as f:
+		with open(file_path or HS_CODES_DATA_FILE) as f:
 			rows = json.load(f)
 
 	existing = {

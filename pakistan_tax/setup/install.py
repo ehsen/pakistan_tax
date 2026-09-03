@@ -470,6 +470,9 @@ def after_install():
 	create_custom_fields(CUSTOM_FIELDS, ignore_validate=True)
 	_ensure_customs_tariff_number_description_length()
 
+	from pakistan_tax.fbr.sync import sync_hs_codes
+	sync_hs_codes()
+
 	from pakistan_tax.wht.seed import _seed
 	_seed()
 
@@ -482,6 +485,9 @@ def after_migrate():
 	# shipped in a later version of the app, on every migrate
 	create_custom_fields(CUSTOM_FIELDS, ignore_validate=True)
 	_ensure_customs_tariff_number_description_length()
+
+	from pakistan_tax.fbr.sync import sync_hs_codes
+	sync_hs_codes()
 
 	from pakistan_tax.wht.seed import _seed
 	_seed()
