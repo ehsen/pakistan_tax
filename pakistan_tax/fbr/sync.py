@@ -7,6 +7,7 @@ stamped on every sync, and rows are closed (valid_upto) when they stop
 appearing. Nothing is edited or deleted — history accumulates.
 """
 
+import json
 import re
 import time
 
@@ -391,7 +392,7 @@ def sync_sro_chain(client=None, for_date=None):
 	return summary
 
 
-# ---------------------------------------------------------------- HS UOM
+# ---------------------------------------------------------------- HS Code
 
 def ensure_customs_tariff_number(hs_code, description=None):
 	"""Item.customs_tariff_number is a Link — the record must exist."""
@@ -402,6 +403,56 @@ def ensure_customs_tariff_number(hs_code, description=None):
 			"description": description or hs_code,
 		}).insert(ignore_permissions=True)
 	return hs_code
+
+
+def sync_hs_codes(rows=None, file_path=None, batch_size=200):
+	"""Bulk create/update Customs Tariff Number records from a full HS code
+	list (FBR's HS code reference export — a list of {hS_CODE, description}
+	dicts; hs_code/description also accepted). Idempotent — safe to re-run
+	whenever FBR publishes an updated list.
+
+	Existing rows get their description updated only when it actually
+	changed, so re-running this doesn't touch modified/unmodified timestamps
+	for the other ~7000 unaffected rows.
+	"""
+	if rows is None:
+		with open(file_path) as f:
+			rows = json.load(f)
+
+	existing = {
+		row.name: row.description
+		for row in frappe.db.get_all(
+			"Customs Tariff Number", fields=["name", "description"], limit_page_length=0
+		)
+	}
+
+	summary = {"inserted": 0, "updated": 0, "unchanged": 0, "skipped": 0, "total": len(rows)}
+	for i, row in enumerate(rows, 1):
+		hs_code = (row.get("hS_CODE") or row.get("hs_code") or "").strip()
+		description = (row.get("description") or "").strip()
+		if not hs_code:
+			summary["skipped"] += 1
+			continue
+
+		if hs_code not in existing:
+			frappe.get_doc({
+				"doctype": "Customs Tariff Number",
+				"tariff_number": hs_code,
+				"description": description or hs_code,
+			}).insert(ignore_permissions=True)
+			summary["inserted"] += 1
+		elif description and description != existing[hs_code]:
+			frappe.db.set_value("Customs Tariff Number", hs_code, "description",
+				description, update_modified=False)
+			summary["updated"] += 1
+		else:
+			summary["unchanged"] += 1
+
+		if i % batch_size == 0:
+			frappe.db.commit()
+
+	frappe.db.commit()
+	return summary
 
 
 def sync_hs_uom(hs_code, annexure_id=3, client=None):

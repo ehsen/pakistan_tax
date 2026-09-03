@@ -443,8 +443,32 @@ def before_install():
 		)
 
 
+def _ensure_customs_tariff_number_description_length():
+	"""Customs Tariff Number.description ships as a core Data field (140-char
+	DB limit), but real FBR HS code descriptions routinely run past 900
+	characters — bulk sync fails with CharacterLengthExceededError. Widen it
+	via a Property Setter rather than patching core."""
+	if frappe.db.exists("Property Setter",
+		{"doc_type": "Customs Tariff Number", "field_name": "description", "property": "fieldtype"}):
+		return
+	frappe.make_property_setter({
+		"doctype": "Customs Tariff Number",
+		"fieldname": "description",
+		"property": "fieldtype",
+		"value": "Small Text",
+		"property_type": "Select",
+	}, ignore_validate=True, module=MODULE)
+	# bench migrate's schema sync only re-syncs doctypes whose own .json
+	# changed; an unrelated Property Setter on a core doctype doesn't trigger
+	# it, so the column would stay varchar(140) until some later unrelated
+	# migrate happened to touch it. Alter it now instead of hoping.
+	frappe.clear_cache(doctype="Customs Tariff Number")
+	frappe.db.updatedb("Customs Tariff Number")
+
+
 def after_install():
 	create_custom_fields(CUSTOM_FIELDS, ignore_validate=True)
+	_ensure_customs_tariff_number_description_length()
 
 	from pakistan_tax.wht.seed import _seed
 	_seed()
@@ -457,6 +481,7 @@ def after_migrate():
 	# Idempotent — keeps fields present, and seeds any new reference rows
 	# shipped in a later version of the app, on every migrate
 	create_custom_fields(CUSTOM_FIELDS, ignore_validate=True)
+	_ensure_customs_tariff_number_description_length()
 
 	from pakistan_tax.wht.seed import _seed
 	_seed()
