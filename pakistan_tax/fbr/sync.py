@@ -506,16 +506,36 @@ def sync_all():
 
 
 def daily_sync():
-	"""Scheduler entry point — no-op unless an enabled FBR Settings exists.
+	"""Scheduler entry point — no-op (beyond status stamping) unless an
+	enabled FBR Settings exists.
 
 	Reference data (provinces/transaction types/UOMs/rates/SRO chain) is
 	global, so it's synced once. Item Tax Template generation is per-company
 	(pk_is_fbr_generated templates carry a company), so it runs once per
 	company with an enabled FBR Settings, isolated so one company's failure
-	doesn't block another's."""
-	companies = frappe.get_all("FBR Settings", filters={"is_enabled": 1}, pluck="company")
-	if not companies:
+	doesn't block another's.
+
+	Every FBR Settings doc — enabled or not — gets last_sync_on/status/
+	summary stamped, so "disabled", "ran and failed" and "ran and
+	succeeded" are visible on the form instead of only in Error Log/FBR Api
+	Log."""
+	all_settings = frappe.get_all("FBR Settings", fields=["name", "company", "is_enabled"])
+	if not all_settings:
 		return
+
+	for setting in all_settings:
+		if not setting.is_enabled:
+			frappe.db.set_value("FBR Settings", setting.name, {
+				"last_sync_on": now_datetime(),
+				"last_sync_status": "Skipped (Disabled)",
+				"last_sync_summary": "Daily sync did not run: is_enabled is off.",
+			}, update_modified=False)
+
+	enabled = [s for s in all_settings if s.is_enabled]
+	if not enabled:
+		return
+
+	reference_error = None
 	try:
 		client = FBRClient()
 		sync_provinces(client)
@@ -524,15 +544,34 @@ def daily_sync():
 		sync_rates(client)
 		sync_sro_chain(client)
 	except Exception:
-		frappe.log_error(title="FBR daily sync failed", message=frappe.get_traceback())
+		reference_error = frappe.get_traceback()
+		frappe.log_error(title="FBR daily sync failed", message=reference_error)
 
 	from pakistan_tax.tax_config.template_generator import (
 		generate_item_tax_templates, update_transaction_type_defaults)
 
-	for company in companies:
+	for setting in enabled:
+		if reference_error:
+			frappe.db.set_value("FBR Settings", setting.name, {
+				"last_sync_on": now_datetime(),
+				"last_sync_status": "Failed",
+				"last_sync_summary": reference_error[:1000],
+			}, update_modified=False)
+			continue
 		try:
-			generate_item_tax_templates(company)
-			update_transaction_type_defaults(company)
+			generate_item_tax_templates(setting.company)
+			update_transaction_type_defaults(setting.company)
+			frappe.db.set_value("FBR Settings", setting.name, {
+				"last_sync_on": now_datetime(),
+				"last_sync_status": "Success",
+				"last_sync_summary": "Reference data + Item Tax Templates synced.",
+			}, update_modified=False)
 		except Exception:
+			tb = frappe.get_traceback()
 			frappe.log_error(title="FBR Item Tax Template generation failed",
-				message=f"company={company}\n{frappe.get_traceback()}")
+				message=f"company={setting.company}\n{tb}")
+			frappe.db.set_value("FBR Settings", setting.name, {
+				"last_sync_on": now_datetime(),
+				"last_sync_status": "Failed",
+				"last_sync_summary": tb[:1000],
+			}, update_modified=False)

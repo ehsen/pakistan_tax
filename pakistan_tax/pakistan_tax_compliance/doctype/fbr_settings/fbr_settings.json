@@ -10,6 +10,11 @@
   "column_break_a",
   "environment",
   "statl_revalidation_days",
+  "section_sync_status",
+  "last_sync_on",
+  "last_sync_status",
+  "column_break_sync",
+  "last_sync_summary",
   "section_tokens",
   "sandbox_token",
   "production_token",
@@ -67,6 +72,35 @@
    "fieldname": "statl_revalidation_days",
    "fieldtype": "Int",
    "label": "Statl Revalidation Days"
+  },
+  {
+   "fieldname": "section_sync_status",
+   "fieldtype": "Section Break",
+   "label": "Sync Status"
+  },
+  {
+   "fieldname": "last_sync_on",
+   "fieldtype": "Datetime",
+   "label": "Last Sync On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_sync_status",
+   "fieldtype": "Select",
+   "label": "Last Sync Status",
+   "options": "\nSuccess\nFailed\nSkipped (Disabled)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_sync",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Set automatically by the daily scheduled sync and by the manual \"Sync Now\" button.",
+   "fieldname": "last_sync_summary",
+   "fieldtype": "Small Text",
+   "label": "Last Sync Summary",
+   "read_only": 1
   },
   {
    "fieldname": "section_tokens",

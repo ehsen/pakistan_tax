@@ -3,24 +3,21 @@
 
 frappe.ui.form.on('FBR Settings', {
 	refresh: function(frm) {
-		frm.add_custom_button(__('Sync Provinces'), function() {
-			let env = frm.doc.environment;
-			let token = env === "Sandbox" ? frm.doc.sandbox_token : frm.doc.production_token;
-			if (!token) {
-				frappe.msgprint(__('Please enter the {0} API token first.', [env]));
+		frm.add_custom_button(__('Fetch Tax Updates from FBR'), function() {
+			if (frm.is_new()) {
+				frappe.msgprint(__('Please save FBR Settings before fetching tax updates.'));
 				return;
 			}
+
 			frappe.call({
-				method: "pakistan_tax.pakistan_tax_compliance.doctype.fbr_settings.fbr_settings.sync_provinces",
-				args: {
-					env: env,
-					token: token
-				},
-				freeze: true,
-				freeze_message: __("Syncing Provinces from FBR..."),
+				method: "pakistan_tax.pakistan_tax_compliance.doctype.fbr_settings.fbr_settings.fetch_tax_updates",
+				args: { company: frm.doc.name },
 				callback: function(r) {
 					if (!r.exc) {
-						frappe.msgprint(__('Provinces synced successfully.'));
+						frappe.show_alert({
+							message: __('Fetching tax updates from FBR in the background — provinces first, then the rest. You will be notified here when it completes.'),
+							indicator: 'blue'
+						}, 7);
 					}
 				}
 			});
